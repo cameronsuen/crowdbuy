@@ -1,0 +1,223 @@
+import 'package:flutter/material.dart';
+import 'package:duration/duration.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class Pairing {
+  String item;
+  String postedBy;
+  String location;
+  bool favorite;
+  DateTime postedDate;
+  DateTime deadline;
+  Pairing(this.item, this.postedBy, this.location, this.favorite,
+      this.postedDate, this.deadline);
+}
+
+class PairingItem extends StatelessWidget {
+  final Pairing pairing;
+  const PairingItem(this.pairing, {Key? key}) : super(key: key);
+  String displayPostedDateOrDeadline() {
+    DateTime now = DateTime.now();
+    DateTime fiveDaysTillNow = now.add(const Duration(days: 5));
+    Duration timeDiff;
+    String leftOrAgo;
+    if (pairing.deadline.isBefore(fiveDaysTillNow)) {
+      timeDiff = pairing.deadline.difference(now);
+      leftOrAgo = "left";
+    } else {
+      timeDiff = now.difference(pairing.postedDate);
+      leftOrAgo = "ago";
+    }
+    DurationTersity tersity = DurationTersity.day;
+    if (timeDiff < const Duration(minutes: 1)) {
+      tersity = DurationTersity.second;
+    } else if (timeDiff < const Duration(hours: 1)) {
+      tersity = DurationTersity.minute;
+    } else if (timeDiff < const Duration(days: 1)) {
+      tersity = DurationTersity.hour;
+    }
+
+    return '${printDuration(timeDiff, tersity: tersity, abbreviated: true)} $leftOrAgo';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: ListTile(
+            leading: const FlutterLogo(size: 72.0),
+            title: Text(pairing.item),
+            isThreeLine: true,
+            trailing: SizedBox(
+                width: 150,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: <Widget>[
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Icon(pairing.favorite
+                              ? Icons.favorite
+                              : Icons.favorite_border),
+                          const Icon(Icons.add_a_photo_outlined)
+                        ]),
+                    Text(displayPostedDateOrDeadline())
+                  ],
+                )),
+            subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(
+                      text: TextSpan(
+                          text: pairing.location,
+                          style: const TextStyle(fontWeight: FontWeight.bold))),
+                  RichText(
+                      text: TextSpan(
+                          text: 'Post by ',
+                          style: DefaultTextStyle.of(context).style,
+                          children: <TextSpan>[
+                        TextSpan(
+                            text: pairing.postedBy,
+                            style: const TextStyle(fontWeight: FontWeight.bold))
+                      ]))
+                ])));
+  }
+}
+
+class PairingList extends StatelessWidget {
+  final List<Pairing> items;
+  const PairingList({Key? key, required this.items}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return PairingItem(items[index]);
+        });
+  }
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(title: 'CrowdBuy'),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Bad: testing only
+    DateTime now = DateTime.now();
+    DateTime threeDaysAfter = now.add(const Duration(days: 3));
+    DateTime twoWeeksAfter = now.add(const Duration(days: 14));
+    DateTime fiveMinAgo = now.subtract(const Duration(minutes: 5));
+    DateTime twelveMinAgo = now.subtract(const Duration(minutes: 12));
+    List<Pairing> pairings = <Pairing>[
+      Pairing('ASport 40% off over \$500', 'ASport Offical',
+          'Nano Plaza - ASport', false, fiveMinAgo, threeDaysAfter),
+      Pairing('ASport Wait for Pair!!!', 'Koey98', 'Nano Plaza - ASport', false,
+          fiveMinAgo, twoWeeksAfter),
+      Pairing('\$700 for 2 pairs of shoes', 'Jack_Smith',
+          'Nano Plaza - Boutique', false, twelveMinAgo, twoWeeksAfter),
+    ];
+
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
+    return Scaffold(
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
+      ),
+      body: Center(
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: PairingList(items: pairings),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.near_me),
+            label: 'Nearby',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Community',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat_bubble_outline_rounded),
+            label: 'Chat',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.login),
+            label: 'Account',
+          ),
+        ], // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+    );
+  }
+}
