@@ -1,104 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 void main() {
   runApp(const MyApp());
-}
-
-class Pairing {
-  String item;
-  String postedBy;
-  String location;
-  bool favorite;
-  DateTime postedDate;
-  DateTime deadline;
-  Pairing(this.item, this.postedBy, this.location, this.favorite,
-      this.postedDate, this.deadline);
-}
-
-class PairingItem extends StatelessWidget {
-  final Pairing pairing;
-  const PairingItem(this.pairing, {Key? key}) : super(key: key);
-  String displayPostedDateOrDeadline() {
-    DateTime now = DateTime.now();
-    DateTime fiveDaysTillNow = now.add(const Duration(days: 5));
-    Duration timeDiff;
-    String leftOrAgo;
-    if (pairing.deadline.isBefore(fiveDaysTillNow)) {
-      timeDiff = pairing.deadline.difference(now);
-      leftOrAgo = "left";
-    } else {
-      timeDiff = now.difference(pairing.postedDate);
-      leftOrAgo = "ago";
-    }
-    DurationTersity tersity = DurationTersity.day;
-    if (timeDiff < const Duration(minutes: 1)) {
-      tersity = DurationTersity.second;
-    } else if (timeDiff < const Duration(hours: 1)) {
-      tersity = DurationTersity.minute;
-    } else if (timeDiff < const Duration(days: 1)) {
-      tersity = DurationTersity.hour;
-    }
-
-    return '${printDuration(timeDiff, tersity: tersity, abbreviated: true)} $leftOrAgo';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        child: ListTile(
-            leading: const FlutterLogo(size: 72.0),
-            title: Text(pairing.item),
-            isThreeLine: true,
-            trailing: SizedBox(
-                width: 150,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Icon(pairing.favorite
-                              ? Icons.favorite
-                              : Icons.favorite_border),
-                          const Icon(Icons.add_a_photo_outlined)
-                        ]),
-                    Text(displayPostedDateOrDeadline())
-                  ],
-                )),
-            subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  RichText(
-                      text: TextSpan(
-                          text: pairing.location,
-                          style: const TextStyle(fontWeight: FontWeight.bold))),
-                  RichText(
-                      text: TextSpan(
-                          text: 'Post by ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                        TextSpan(
-                            text: pairing.postedBy,
-                            style: const TextStyle(fontWeight: FontWeight.bold))
-                      ]))
-                ])));
-  }
-}
-
-class PairingList extends StatelessWidget {
-  final List<Pairing> items;
-  const PairingList({Key? key, required this.items}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return PairingItem(items[index]);
-        });
-  }
 }
 
 class MyApp extends StatelessWidget {
@@ -108,7 +12,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'CrowdBuy',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -119,7 +24,8 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepOrange,
+        textTheme: Theme.of(context).textTheme.apply(),
       ),
       home: const MyHomePage(title: 'CrowdBuy'),
     );
@@ -182,11 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
+      appBar: const FloatingAppBar(),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
@@ -213,11 +115,152 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Chat',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.login),
+            icon: Icon(Icons.person),
             label: 'Account',
           ),
         ], // This trailing comma makes auto-formatting nicer for build methods.
       ),
     );
+  }
+}
+
+class FloatingAppBar extends StatelessWidget with PreferredSizeWidget {
+  const FloatingAppBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        margin: const EdgeInsets.all(8.0),
+        child: Material(
+            color: Colors.white,
+            elevation: 3,
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20))),
+              child: Row(children: <Widget>[
+                const Expanded(
+                  child: TextField(
+                    cursorColor: Colors.black,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.go,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.fromLTRB(15, 0, 15, 8),
+                        hintText: "Search for discounts..."),
+                  ),
+                ),
+                IconButton(
+                  splashColor: Colors.grey,
+                  splashRadius: Material.defaultSplashRadius / 1.2,
+                  icon: const Icon(Icons.search),
+                  onPressed: () {},
+                ),
+              ]),
+            )));
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class Pairing {
+  String item;
+  String postedBy;
+  String location;
+  bool favorite;
+  DateTime postedDate;
+  DateTime deadline;
+  Pairing(this.item, this.postedBy, this.location, this.favorite,
+      this.postedDate, this.deadline);
+}
+
+class PairingItem extends StatelessWidget {
+  final Pairing pairing;
+  const PairingItem(this.pairing, {Key? key}) : super(key: key);
+  String displayPostedDateOrDeadline() {
+    DateTime now = DateTime.now();
+    DateTime fiveDaysTillNow = now.add(const Duration(days: 5));
+    Duration timeDiff;
+    String leftOrAgo;
+    if (pairing.deadline.isBefore(fiveDaysTillNow)) {
+      timeDiff = pairing.deadline.difference(now);
+      leftOrAgo = "left";
+    } else {
+      timeDiff = now.difference(pairing.postedDate);
+      leftOrAgo = "ago";
+    }
+    DurationTersity tersity = DurationTersity.day;
+    if (timeDiff < const Duration(minutes: 1)) {
+      tersity = DurationTersity.second;
+    } else if (timeDiff < const Duration(hours: 1)) {
+      tersity = DurationTersity.minute;
+    } else if (timeDiff < const Duration(days: 1)) {
+      tersity = DurationTersity.hour;
+    }
+
+    return '${prettyDuration(timeDiff, tersity: tersity, abbreviated: true)} $leftOrAgo';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        child: ListTile(
+            leading: Column(
+              children: <Widget>[
+                (CircleAvatar(
+                  backgroundColor: Colors.deepOrangeAccent,
+                  child: Text('${pairing.postedBy[0]} ${pairing.postedBy[1]}'),
+                ))
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            title: Text(pairing.item),
+            isThreeLine: true,
+            trailing: SizedBox(
+                width: 80,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Icon(pairing.favorite
+                              ? Icons.favorite
+                              : Icons.favorite_border),
+                          const Icon(Icons.person_add_alt_1_outlined)
+                        ]),
+                    Text(displayPostedDateOrDeadline())
+                  ],
+                )),
+            subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(text: TextSpan(text: pairing.location)),
+                  RichText(
+                      text: TextSpan(
+                          text: 'Post by ',
+                          style: DefaultTextStyle.of(context).style,
+                          children: <TextSpan>[
+                        TextSpan(
+                            text: pairing.postedBy,
+                            style: const TextStyle(fontWeight: FontWeight.bold))
+                      ]))
+                ])));
+  }
+}
+
+class PairingList extends StatelessWidget {
+  final List<Pairing> items;
+  const PairingList({Key? key, required this.items}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return PairingItem(items[index]);
+        });
   }
 }
