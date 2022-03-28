@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
 
+import 'b2c.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -122,6 +124,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+}
+
+Route _createRoute() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => const B2C(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return child;
+    },
+  );
 }
 
 class FloatingAppBar extends StatelessWidget with PreferredSizeWidget {
@@ -247,7 +258,10 @@ class PairingItem extends StatelessWidget {
                             text: pairing.postedBy,
                             style: const TextStyle(fontWeight: FontWeight.bold))
                       ]))
-                ])));
+                ]),
+            onTap: () {
+              Navigator.of(context).push(_createRoute());
+            }));
   }
 }
 
