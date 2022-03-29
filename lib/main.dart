@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
+import 'package:uuid/uuid.dart';
 
 import 'b2c.dart';
+import 'chat.dart';
 
 void main() {
   runApp(const MyApp());
@@ -128,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const B2C(),
+    pageBuilder: (context, animation, secondaryAnimation) => const Chat(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },
@@ -176,6 +178,7 @@ class FloatingAppBar extends StatelessWidget with PreferredSizeWidget {
 }
 
 class Pairing {
+  String id;
   String item;
   String postedBy;
   String location;
@@ -183,7 +186,9 @@ class Pairing {
   DateTime postedDate;
   DateTime deadline;
   Pairing(this.item, this.postedBy, this.location, this.favorite,
-      this.postedDate, this.deadline);
+      this.postedDate, this.deadline,
+      [String? id])
+      : id = id ?? const Uuid().v1.toString();
 }
 
 class PairingItem extends StatelessWidget {
