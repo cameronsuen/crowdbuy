@@ -3,6 +3,7 @@ import 'package:duration/duration.dart';
 import 'package:uuid/uuid.dart';
 
 import 'b2c.dart';
+import 'account.dart';
 import 'chat.dart';
 
 void main() {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.deepOrange,
+        primarySwatch: Colors.red,
         textTheme: Theme.of(context).textTheme.apply(),
       ),
       home: const MyHomePage(title: 'CrowdBuy'),
@@ -104,6 +105,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        // currentIndex: index,
+        // onTap: (int index) {
+        //   setState(() {
+        //     this.index = index;
+        //   }
+        //   );
+        //   _navigateToScreens(index);
+        // },
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -130,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const Chat(),
+    pageBuilder: (context, animation, secondaryAnimation) => const B2C(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },
