@@ -7,9 +7,20 @@ class Account extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: const Center(
-        child: Text('Account View'),
-      ),
+      body: Center(
+          child: Column(
+        children: const [
+          Text('CrowdBuy Guys'),
+          Text('Kwun Tong'),
+          Divider(
+            height: 20,
+            thickness: 1,
+            indent: 0,
+            endIndent: 0,
+            color: Colors.grey,
+          ),
+        ],
+      )),
     );
   }
 }

@@ -5,44 +5,55 @@ class B2C extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ButtonStyle style = ElevatedButton.styleFrom(
-        primary: const Color(0xFFFF7276),
-        textStyle: const TextStyle(fontSize: 20));
-
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Column(
+          children: const [
+            Text("ASport"),
+          ],
+          crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+        leadingWidth: 72,
+        leading: FittedBox(
+            fit: BoxFit.cover,
+            child: Row(
+              children: const <Widget>[
+                Icon(Icons.arrow_back),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                    child: CircleAvatar(
+                      child: Text('AS'),
+                    )),
+              ],
+            )),
+      ),
       body: Center(
           child: Column(
         children: [
           const Image(
             image: NetworkImage('../asset/discount_photo.jpg'),
           ),
+          ListTile(
+              title: const Text('ASport 40% off over \$500',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              subtitle: RichText(
+                  text: const TextSpan(
+                      text: 'Post by ',
+                      style: TextStyle(color: Colors.grey),
+                      children: <TextSpan>[
+                    TextSpan(
+                        text: "ASport Official",
+                        style: TextStyle(fontWeight: FontWeight.bold))
+                  ]))),
           const ListTile(
-              title: Text('ASport 40% off over \$500'),
+              trailing: Text('3 days left'),
               subtitle: Text(
-                'Post by ASport Official',
-                // subtitle: Column(
-                //   children: const [
-                //     Text('Post by ASport Official', textAlign: TextAlign.left),
-                //     Text('4.8'),
-                //   ],
+                'Clothing',
+                style: TextStyle(color: Colors.blue),
               )),
-          const ListTile(
-              subtitle: Text(
-            'Clothing',
-            style: TextStyle(color: Colors.blue),
-          )),
           const ListTile(
               title: Text(
             'Outstanding Requests',
-            style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontWeight: FontWeight.bold,
-                fontSize: 18),
-          )),
-          const ListTile(
-              title: Text(
-            'You may also interest...',
             style: TextStyle(
                 decoration: TextDecoration.underline,
                 fontWeight: FontWeight.bold,
@@ -54,45 +65,62 @@ class B2C extends StatelessWidget {
                 children: const <Widget>[
                   (CircleAvatar(
                     backgroundColor: Colors.deepOrangeAccent,
-                    child: Text("TH"),
+                    child: Text("K"),
                   )),
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
-              title: const Text("ASport 40% off over \$500"),
+              title: const Text("Koey98"),
               isThreeLine: true,
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   RichText(
                     text: const TextSpan(
-                      text: 'Nano Plaza (ASport) 150m',
+                      text: '4.8',
                       //style: DefaultTextStyle.of(context).style,
                     ),
                   ),
                   RichText(
                     text: const TextSpan(
-                      text: "Post by ",
+                      text: "5 minutes ago",
                       //style: DefaultTextStyle.of(context).style,
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: "ASport Official",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
                     ),
                   ),
                 ],
               ),
             ),
           ),
+          const ListTile(
+              title: Text(
+            'You may also interest...',
+            style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.bold,
+                fontSize: 18),
+          )),
+          const Divider(
+            height: 20,
+            thickness: 1,
+            indent: 0,
+            endIndent: 0,
+            color: Colors.grey,
+          ),
           Row(children: [
-            ElevatedButton(
-              style: style,
-              onPressed: () {},
-              child: const Text('New Request'),
+            const SizedBox(width: 20, height: 30),
+            SizedBox(
+              width: 400, // <-- Your width
+              height: 40,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFFFF7276),
+                    textStyle: const TextStyle(fontSize: 20)),
+                onPressed: () {},
+                child: const Text('New Request'),
+              ),
             ),
-            const Icon(Icons.chat_bubble_outline_rounded)
+            const SizedBox(width: 20, height: 40),
+            const Icon(Icons.chat_outlined, size: 35)
           ])
         ],
       )),
