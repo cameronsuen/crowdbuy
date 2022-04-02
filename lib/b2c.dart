@@ -18,15 +18,41 @@ class B2C extends StatelessWidget {
             image: NetworkImage('../asset/discount_photo.jpg'),
           ),
           const ListTile(
-            title: Text('ASport 40% off over \$500'),
-            subtitle: Text('Post by ASport Official'),
-          ),
+              title: Text('ASport 40% off over \$500'),
+              subtitle: Text(
+                'Post by ASport Official',
+                // subtitle: Column(
+                //   children: const [
+                //     Text('Post by ASport Official', textAlign: TextAlign.left),
+                //     Text('4.8'),
+                //   ],
+              )),
           const ListTile(
-            // tileColor: Color.fromARGB(156, 255, 0, 0),
-            leading: Icon(Icons.album),
-            title: Text('Koey98'),
-            subtitle: Text('4.8'),
-          ),
+              subtitle: Text(
+            'Clothing',
+            style: TextStyle(color: Colors.blue),
+          )),
+          const ListTile(
+              title: Text(
+            'Outstanding Requests',
+            style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.bold,
+                fontSize: 18),
+          )),
+          const ListTile(
+              title: Text(
+            'You may also interest...',
+            style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontWeight: FontWeight.bold,
+                fontSize: 18),
+          )),
+          // const ListTile(
+          //   leading: Icon(Icons.album),
+          //   title: Text('Koey98'),
+          //   subtitle: Text('4.8'),
+          // ),
           Row(children: [
             ElevatedButton(
               style: style,
