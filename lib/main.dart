@@ -1,3 +1,4 @@
+import 'package:crowdbuy/request.dart';
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
 import 'package:uuid/uuid.dart';
@@ -139,7 +140,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const ChatPage(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        const RequestPage(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },
