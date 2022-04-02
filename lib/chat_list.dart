@@ -4,62 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
 import 'package:uuid/uuid.dart';
 
-import 'b2c.dart';
-import 'account.dart';
-import 'chat.dart';
-import 'chat_list.dart';
-import 'community.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'CrowdBuy',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.indigo,
-        textTheme: Theme.of(context).textTheme.apply(),
-      ),
-      home: const MyHomePage(title: 'CrowdBuy'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class ChatList extends StatefulWidget {
+  const ChatList({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<ChatList> createState() => ChatListState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class ChatListState extends State<ChatList> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -78,37 +30,18 @@ class _MyHomePageState extends State<MyHomePage> {
     // Bad: testing only
     DateTime now = DateTime.now();
     DateTime threeDaysAfter = now.add(const Duration(days: 3));
-    DateTime oneWeekAfter = now.add(const Duration(days: 7));
     DateTime twoWeeksAfter = now.add(const Duration(days: 14));
     DateTime fiveMinAgo = now.subtract(const Duration(minutes: 5));
     DateTime twelveMinAgo = now.subtract(const Duration(minutes: 12));
-
-    DateTime twoDaysAgo = now.subtract(const Duration(days: 2));
-    DateTime threeDaysAgo = now.subtract(const Duration(days: 3));
-    DateTime fiveDaysAgo = now.subtract(const Duration(days: 5));
-
     List<Pairing> pairings = <Pairing>[
       Pairing('ASport 40% off over \$500', 'ASport Offical',
-          'Nano Plaza - ASport', false, fiveMinAgo, threeDaysAfter, 5),
+          'Nano Plaza - ASport', false, fiveMinAgo, threeDaysAfter, 10),
       Pairing('ASport Wait for Pair!!!', 'Koey98', 'Nano Plaza - ASport', false,
-          fiveMinAgo, twoWeeksAfter, 8),
+          fiveMinAgo, twoWeeksAfter, 5),
       Pairing('\$700 for 2 pairs of shoes', 'Jack_Smith',
           'Nano Plaza - Boutique', false, twelveMinAgo, twoWeeksAfter, 10),
-      Pairing('BSport 20% off over \$800', 'BSport Offical',
-          'Mega Plaza - BSport', false, fiveDaysAgo, threeDaysAfter, 10),
-      Pairing('ASport Wait for Pair!!!', 'Koey98', 'Nano Plaza - ASport', false,
-          twoDaysAgo, oneWeekAfter, 20),
-      Pairing('\$700 for 2 pairs of shoes', 'Jack_Smith',
-          'Nano Plaza - Boutique', false, threeDaysAgo, twoWeeksAfter, 3),
     ];
 
-    var categories = <PairingCategory>[
-      PairingCategory("Latest",
-          pairings.where((p) => p.postedDate.isAfter(twoDaysAgo)).toList()),
-      PairingCategory("Popular", pairings.where((p) => p.liked > 5).toList()),
-      PairingCategory("Last Minute Offer",
-          pairings.where((p) => p.deadline.isBefore(oneWeekAfter)).toList()),
-    ];
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -120,8 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        //child: PairingList(items: pairings),
-        child: CommunityPage(categories),
+        child: PairingList(items: pairings),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
@@ -129,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
+        // currentIndex: index,
         // onTap: (int index) {
         //   setState(() {
         //     this.index = index;
@@ -210,6 +142,20 @@ class FloatingAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
+/*class Pairing {
+  String id;
+  String item;
+  String postedBy;
+  String location;
+  bool favorite;
+  DateTime postedDate;
+  DateTime deadline;
+  Pairing(this.item, this.postedBy, this.location, this.favorite,
+      this.postedDate, this.deadline,
+      [String? id])
+      : id = id ?? const Uuid().v1.toString();
+}*/
 
 class PairingItem extends StatelessWidget {
   final Pairing pairing;
