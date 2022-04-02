@@ -11,7 +11,6 @@ class ChatPage extends StatefulWidget {
 
 class Chat extends State<ChatPage> {
   final TextEditingController textEditingController = TextEditingController();
-  final FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
@@ -21,7 +20,29 @@ class Chat extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Column(
+            children: <Widget>[
+              const Text("Koey98"),
+              Text(
+                "Last seen 02:55 pm",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).hintColor,
+                ),
+              ),
+            ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          leading: const FittedBox(
+            fit: BoxFit.cover,
+            child: Padding(
+                padding: EdgeInsets.all(8),
+                child: CircleAvatar(
+                  child: Text('TH'),
+                )),
+          ),
+        ),
         body: Stack(children: <Widget>[
           Column(
             children: <Widget>[
@@ -48,17 +69,6 @@ class Chat extends State<ChatPage> {
             ),
             color: Colors.white,
           ),
-          /*Material(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 1),
-              child: IconButton(
-                icon: Icon(Icons.face),
-                onPressed: getSticker,
-                color: ColorConstants.primaryColor,
-              ),
-            ),
-            color: Colors.white,
-          ),*/
 
           // Edit text
           Flexible(
