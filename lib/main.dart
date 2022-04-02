@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const Chat(),
+    pageBuilder: (context, animation, secondaryAnimation) => const ChatPage(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },

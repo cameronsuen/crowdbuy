@@ -2,8 +2,21 @@ import 'package:flutter/material.dart';
 
 import 'chat_provider.dart';
 
-class Chat extends StatelessWidget {
-  const Chat({Key? key}) : super(key: key);
+class ChatPage extends StatefulWidget {
+  const ChatPage({Key? key}) : super(key: key);
+
+  @override
+  Chat createState() => Chat();
+}
+
+class Chat extends State<ChatPage> {
+  final TextEditingController textEditingController = TextEditingController();
+  final FocusNode focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +26,76 @@ class Chat extends StatelessWidget {
           Column(
             children: <Widget>[
               buildMessages(),
+              buildInput(context),
             ],
           ),
         ]));
+  }
+
+  Widget buildInput(BuildContext context) {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          // Button send image
+          Material(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 1),
+              child: IconButton(
+                icon: const Icon(Icons.attach_file),
+                onPressed: getAttachment,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            color: Colors.white,
+          ),
+          /*Material(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 1),
+              child: IconButton(
+                icon: Icon(Icons.face),
+                onPressed: getSticker,
+                color: ColorConstants.primaryColor,
+              ),
+            ),
+            color: Colors.white,
+          ),*/
+
+          // Edit text
+          Flexible(
+            child: TextField(
+              onSubmitted: (value) {
+                onSendMessage(textEditingController.text);
+              },
+              style: const TextStyle(fontSize: 15),
+              controller: textEditingController,
+              decoration: InputDecoration.collapsed(
+                hintText: 'Type your message...',
+                hintStyle: TextStyle(color: Theme.of(context).hintColor),
+              ),
+            ),
+          ),
+
+          // Button send message
+          Material(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              child: IconButton(
+                icon: const Icon(Icons.send),
+                onPressed: () => onSendMessage(textEditingController.text),
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            color: Colors.white,
+          ),
+        ],
+      ),
+      width: double.infinity,
+      height: 50,
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(width: 0.5)),
+        color: Colors.white,
+      ),
+    );
   }
 
   Widget buildMessages() {
@@ -70,4 +150,8 @@ class Chat extends StatelessWidget {
       mainAxisAlignment: axisAlignment,
     );
   }
+
+  void onSendMessage(String text) {}
+
+  void getAttachment() {}
 }
