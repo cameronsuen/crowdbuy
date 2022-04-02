@@ -28,20 +28,25 @@ class Chat extends State<ChatPage> {
                 "Last seen 02:55 pm",
                 style: TextStyle(
                   fontSize: 12,
-                  color: Theme.of(context).hintColor,
+                  color: Theme.of(context).secondaryHeaderColor,
                 ),
               ),
             ],
             crossAxisAlignment: CrossAxisAlignment.start,
           ),
-          leading: const FittedBox(
-            fit: BoxFit.cover,
-            child: Padding(
-                padding: EdgeInsets.all(8),
-                child: CircleAvatar(
-                  child: Text('TH'),
-                )),
-          ),
+          leadingWidth: 72,
+          leading: FittedBox(
+              fit: BoxFit.cover,
+              child: Row(
+                children: const <Widget>[
+                  Icon(Icons.arrow_back),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                      child: CircleAvatar(
+                        child: Text('TH'),
+                      )),
+                ],
+              )),
         ),
         body: Stack(children: <Widget>[
           Column(
