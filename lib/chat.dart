@@ -2,20 +2,110 @@ import 'package:flutter/material.dart';
 
 import 'chat_provider.dart';
 
-class Chat extends StatelessWidget {
-  const Chat({Key? key}) : super(key: key);
+class ChatPage extends StatefulWidget {
+  const ChatPage({Key? key}) : super(key: key);
+
+  @override
+  Chat createState() => Chat();
+}
+
+class Chat extends State<ChatPage> {
+  final TextEditingController textEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Column(
+            children: <Widget>[
+              const Text("Koey98"),
+              Text(
+                "Last seen 02:55 pm",
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).hintColor,
+                ),
+              ),
+            ],
+            crossAxisAlignment: CrossAxisAlignment.start,
+          ),
+          leading: const FittedBox(
+            fit: BoxFit.cover,
+            child: Padding(
+                padding: EdgeInsets.all(8),
+                child: CircleAvatar(
+                  child: Text('TH'),
+                )),
+          ),
+        ),
         body: Stack(children: <Widget>[
           Column(
             children: <Widget>[
               buildMessages(),
+              buildInput(context),
             ],
           ),
         ]));
+  }
+
+  Widget buildInput(BuildContext context) {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          // Button send image
+          Material(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 1),
+              child: IconButton(
+                icon: const Icon(Icons.attach_file),
+                onPressed: getAttachment,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            color: Colors.white,
+          ),
+
+          // Edit text
+          Flexible(
+            child: TextField(
+              onSubmitted: (value) {
+                onSendMessage(textEditingController.text);
+              },
+              style: const TextStyle(fontSize: 15),
+              controller: textEditingController,
+              decoration: InputDecoration.collapsed(
+                hintText: 'Type your message...',
+                hintStyle: TextStyle(color: Theme.of(context).hintColor),
+              ),
+            ),
+          ),
+
+          // Button send message
+          Material(
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              child: IconButton(
+                icon: const Icon(Icons.send),
+                onPressed: () => onSendMessage(textEditingController.text),
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            color: Colors.white,
+          ),
+        ],
+      ),
+      width: double.infinity,
+      height: 50,
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(width: 0.5)),
+        color: Colors.white,
+      ),
+    );
   }
 
   Widget buildMessages() {
@@ -70,4 +160,8 @@ class Chat extends StatelessWidget {
       mainAxisAlignment: axisAlignment,
     );
   }
+
+  void onSendMessage(String text) {}
+
+  void getAttachment() {}
 }

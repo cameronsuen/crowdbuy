@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.indigo,
         textTheme: Theme.of(context).textTheme.apply(),
       ),
       home: const MyHomePage(title: 'CrowdBuy'),
@@ -139,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const B2C(),
+    pageBuilder: (context, animation, secondaryAnimation) => const ChatPage(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },
