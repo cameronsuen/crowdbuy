@@ -180,6 +180,12 @@ class FloatingAppBar extends StatelessWidget with PreferredSizeWidget {
                   icon: const Icon(Icons.search),
                   onPressed: () {},
                 ),
+                IconButton(
+                  splashColor: Colors.grey,
+                  splashRadius: Material.defaultSplashRadius / 1.2,
+                  icon: const Icon(Icons.filter_list),
+                  onPressed: () {},
+                ),
               ]),
             )));
   }
