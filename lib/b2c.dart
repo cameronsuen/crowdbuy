@@ -48,11 +48,44 @@ class B2C extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: 18),
           )),
-          // const ListTile(
-          //   leading: Icon(Icons.album),
-          //   title: Text('Koey98'),
-          //   subtitle: Text('4.8'),
-          // ),
+          Card(
+            child: ListTile(
+              leading: Column(
+                children: const <Widget>[
+                  (CircleAvatar(
+                    backgroundColor: Colors.deepOrangeAccent,
+                    child: Text("TH"),
+                  )),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+              title: const Text("ASport 40% off over \$500"),
+              isThreeLine: true,
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  RichText(
+                    text: const TextSpan(
+                      text: 'Nano Plaza (ASport) 150m',
+                      //style: DefaultTextStyle.of(context).style,
+                    ),
+                  ),
+                  RichText(
+                    text: const TextSpan(
+                      text: "Post by ",
+                      //style: DefaultTextStyle.of(context).style,
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "ASport Official",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
           Row(children: [
             ElevatedButton(
               style: style,
