@@ -230,7 +230,8 @@ class PairingItem extends StatelessWidget {
               children: <Widget>[
                 (CircleAvatar(
                   backgroundColor: Colors.deepOrangeAccent,
-                  child: Text('${pairing.postedBy[0]} ${pairing.postedBy[1]}'),
+                  child: Image(image: NetworkImage(pairing.postedBy.avatarUrl)),
+                  //child: Text('${pairing.postedBy[0]} ${pairing.postedBy[1]}'),
                 ))
               ],
               mainAxisAlignment: MainAxisAlignment.center,
@@ -264,7 +265,7 @@ class PairingItem extends StatelessWidget {
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
                         TextSpan(
-                            text: pairing.postedBy,
+                            text: pairing.postedBy.username,
                             style: const TextStyle(fontWeight: FontWeight.bold))
                       ]))
                 ]),

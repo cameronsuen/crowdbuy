@@ -32,14 +32,7 @@ class ChatListState extends State<ChatList> {
     DateTime twoWeeksAfter = now.add(const Duration(days: 14));
     DateTime fiveMinAgo = now.subtract(const Duration(minutes: 5));
     DateTime twelveMinAgo = now.subtract(const Duration(minutes: 12));
-    List<Pairing> pairings = <Pairing>[
-      Pairing('ASport 40% off over \$500', 'ASport Offical',
-          'Nano Plaza - ASport', false, fiveMinAgo, threeDaysAfter, 10, ""),
-      Pairing('ASport Wait for Pair!!!', 'Koey98', 'Nano Plaza - ASport', false,
-          fiveMinAgo, twoWeeksAfter, 5, ""),
-      Pairing('\$700 for 2 pairs of shoes', 'Jack_Smith',
-          'Nano Plaza - Boutique', false, twelveMinAgo, twoWeeksAfter, 10, ""),
-    ];
+    List<Pairing> pairings = PairingProvider.getNearby();
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -191,7 +184,9 @@ class PairingItem extends StatelessWidget {
               children: <Widget>[
                 (CircleAvatar(
                   backgroundColor: Colors.deepOrangeAccent,
-                  child: Text('${pairing.postedBy[0]} ${pairing.postedBy[1]}'),
+                  child: Image(
+                    image: NetworkImage(pairing.postedBy.avatarUrl),
+                  ),
                 ))
               ],
               mainAxisAlignment: MainAxisAlignment.center,
@@ -225,7 +220,7 @@ class PairingItem extends StatelessWidget {
                           style: DefaultTextStyle.of(context).style,
                           children: <TextSpan>[
                         TextSpan(
-                            text: pairing.postedBy,
+                            text: pairing.postedBy.username,
                             style: const TextStyle(fontWeight: FontWeight.bold))
                       ]))
                 ]),

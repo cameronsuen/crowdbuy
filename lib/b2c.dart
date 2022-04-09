@@ -36,10 +36,52 @@ class B2C extends StatelessWidget {
   Widget build(BuildContext context) {
     var standardPadding = const EdgeInsets.symmetric(horizontal: 16);
 
+    Widget renderInterestedParty(User user) {
+      return SizedBox(
+        width: 200,
+        child: Card(
+          child: ListTile(
+            //dense: true,
+            leading: Padding(padding: const EdgeInsets.only(top: 8), child:CircleAvatar(
+              backgroundColor: Colors.deepOrangeAccent,
+              child: Image(image: NetworkImage(user.avatarUrl)),
+            ),),
+            title: Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Text(user.username),
+            ),
+            subtitle: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text: '${user.rating}',
+                        //style: DefaultTextStyle.of(context).style,
+                      ),
+                    ),
+                    const Icon(Icons.star, size: 12, color: Colors.amber),
+                  ],
+                ),
+                RichText(
+                  text: const TextSpan(
+                    text: "5 minutes ago",
+                    //style: DefaultTextStyle.of(context).style,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Column(
-          children: [Text(pairing.postedBy)],
+          children: [Text(pairing.postedBy.username)],
           crossAxisAlignment: CrossAxisAlignment.start,
         ),
         leadingWidth: 72,
@@ -85,7 +127,7 @@ class B2C extends StatelessWidget {
                             style: const TextStyle(color: Colors.grey),
                             children: <TextSpan>[
                               TextSpan(
-                                text: pairing.postedBy,
+                                text: pairing.postedBy.username,
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -143,44 +185,29 @@ class B2C extends StatelessWidget {
                   ],
                 ),
               ),
-              const ListTile(
-                  title: Text(
-                'Outstanding Requests',
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
-              )),
-              Card(
-                child: ListTile(
-                  leading: Column(
-                    children: const <Widget>[
-                      (CircleAvatar(
-                        backgroundColor: Colors.deepOrangeAccent,
-                        child: Text("K"),
+              const Padding(
+                padding: EdgeInsets.all(16),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Outstanding Requests',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 100,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: ((context, index) => renderInterestedParty(
+                        pairing.requesters[index],
                       )),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                  ),
-                  title: const Text("Koey98"),
-                  isThreeLine: true,
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      RichText(
-                        text: const TextSpan(
-                          text: '4.8',
-                          //style: DefaultTextStyle.of(context).style,
-                        ),
-                      ),
-                      RichText(
-                        text: const TextSpan(
-                          text: "5 minutes ago",
-                          //style: DefaultTextStyle.of(context).style,
-                        ),
-                      ),
-                    ],
-                  ),
+                  itemCount: pairing.requesters.length,
                 ),
               ),
               const Padding(

@@ -105,9 +105,9 @@ class CommunityItem extends StatelessWidget {
                 children: <Widget>[
                   CircleAvatar(
                     radius: 8,
-                    child: Text(pairing.postedBy[0]),
+                    child: Text(pairing.postedBy.username[0]),
                   ),
-                  Text(pairing.postedBy),
+                  Text(pairing.postedBy.username),
                 ],
               ),
             ),
