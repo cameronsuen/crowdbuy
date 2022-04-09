@@ -20,7 +20,7 @@ class CommunityPage extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(
-                height: 300,
+                height: 275,
                 child: CommunityList(posts: categories[index].pairings)),
             Divider(color: Theme.of(context).hintColor, height: 1),
           ],
@@ -49,7 +49,7 @@ class CommunityPage extends StatelessWidget {
         )
         .toList();
     return Column(
-      children: entries,
+      children: entries/
       mainAxisAlignment: MainAxisAlignment.start,
     );*/
   }
@@ -86,33 +86,30 @@ class CommunityItem extends StatelessWidget {
   Widget build(BuildContext context) {
     //return const Text("hello");
     return SizedBox(
-      width: 400,
+      width: 200,
       child: Card(
         child: Column(
           children: <Widget>[
             const Image(
-              image: NetworkImage("../asset/discount_photo.jpg"),
-              width: 10,
-              height: 10,
+              image: NetworkImage("../asset/discount-tile1.jpg"),
+              fit: BoxFit.fill,
             ),
-            Card(
-              child: ListTile(
-                title: const Text("2nd item at \$1"),
-                trailing: IconButton(
-                  icon: Icon(
-                    pairing.favorite ? Icons.favorite : Icons.favorite_border,
-                  ),
-                  onPressed: onPressed,
+            ListTile(
+              title: const Text("2nd item at \$1"),
+              trailing: IconButton(
+                icon: Icon(
+                  pairing.favorite ? Icons.favorite : Icons.favorite_border,
                 ),
-                subtitle: Row(
+                onPressed: onPressed,
+              ),
+              /*subtitle: Row(
                   children: <Widget>[
                     CircleAvatar(
                       child: Text("${pairing.item[0]}${pairing.item[1]}"),
                     ),
                     Text(pairing.item),
                   ],
-                ),
-              ),
+                ),*/
             ),
           ],
         ),

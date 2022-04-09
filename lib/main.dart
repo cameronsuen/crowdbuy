@@ -123,11 +123,11 @@ class _MyHomePageState extends State<MyHomePage> {
         //child: PairingList(items: pairings),
         child: CommunityPage(categories),
       ),
-      floatingActionButton: FloatingActionButton(
+      /*floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ),
+      ),*/
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1,
         // onTap: (int index) {
