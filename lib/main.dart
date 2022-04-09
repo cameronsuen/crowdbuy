@@ -141,7 +141,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Route makeRequest(Pairing pairing) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => B2C(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        B2C(pairing: pairing),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },

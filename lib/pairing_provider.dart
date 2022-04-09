@@ -51,6 +51,34 @@ class PairingProvider {
     ];
   }
 
+  static List<Pairing> getSimilarItems() {
+    DateTime now = DateTime.now();
+    DateTime tenDaysAfter = now.add(const Duration(days: 10));
+    DateTime fifteenDaysAfter = now.add(const Duration(days: 15));
+    DateTime twentyDaysAfter = now.add(const Duration(days: 20));
+    DateTime fiveMinAgo = now.subtract(const Duration(minutes: 5));
+
+    DateTime twoDaysAgo = now.subtract(const Duration(days: 2));
+    DateTime oneDayAgo = now.subtract(const Duration(days: 1));
+
+    var pairings = <Pairing>[
+      Pairing('2nd Item at \$1', 'ASport Offical', 'Nano Plaza - ASport', false,
+          fiveMinAgo, tenDaysAfter, 10, '../asset/discount-tile1.jpg'),
+      Pairing(
+        'Sharing on  BShop Discount',
+        'Koey98',
+        'Nano Plaza - ASport',
+        false,
+        twoDaysAgo,
+        fifteenDaysAfter,
+        8,
+        '../asset/discount-tile3.jpg',
+      ),
+    ];
+
+    return pairings;
+  }
+
   static List<PairingCategory> getFeaturedItems() {
     DateTime now = DateTime.now();
     DateTime tenDaysAfter = now.add(const Duration(days: 10));

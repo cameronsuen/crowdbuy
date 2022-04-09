@@ -1,45 +1,77 @@
+import 'package:crowdbuy/community.dart';
+import 'package:crowdbuy/pairing_provider.dart';
+import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
 
 class B2C extends StatelessWidget {
-  const B2C({Key? key}) : super(key: key);
+  Pairing pairing;
+
+  B2C({Key? key, required this.pairing}) : super(key: key);
+
+  String displayPostedDateOrDeadline() {
+    DateTime now = DateTime.now();
+    DateTime fiveDaysTillNow = now.add(const Duration(days: 5));
+    Duration timeDiff;
+    String leftOrAgo;
+    if (pairing.deadline.isBefore(fiveDaysTillNow)) {
+      timeDiff = pairing.deadline.difference(now);
+      leftOrAgo = "left";
+    } else {
+      timeDiff = now.difference(pairing.postedDate);
+      leftOrAgo = "ago";
+    }
+    DurationTersity tersity = DurationTersity.day;
+    if (timeDiff < const Duration(minutes: 1)) {
+      tersity = DurationTersity.second;
+    } else if (timeDiff < const Duration(hours: 1)) {
+      tersity = DurationTersity.minute;
+    } else if (timeDiff < const Duration(days: 1)) {
+      tersity = DurationTersity.hour;
+    }
+
+    return '${prettyDuration(timeDiff, tersity: tersity, abbreviated: true)} $leftOrAgo';
+  }
 
   @override
   Widget build(BuildContext context) {
+    var standardPadding = const EdgeInsets.symmetric(horizontal: 16);
+
     return Scaffold(
-        appBar: AppBar(
-          title: Column(
-            children: const [
-              Text("ASport"),
-            ],
-            crossAxisAlignment: CrossAxisAlignment.start,
-          ),
-          leadingWidth: 72,
-          leading: FittedBox(
-              fit: BoxFit.cover,
-              child: Row(
-                children: const <Widget>[
-                  Icon(Icons.arrow_back),
-                  Padding(
-                      padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                      child: CircleAvatar(
-                        child: Text('AS'),
-                      )),
-                ],
-              )),
+      appBar: AppBar(
+        title: Column(
+          children: [Text(pairing.postedBy)],
+          crossAxisAlignment: CrossAxisAlignment.start,
         ),
-        body: SingleChildScrollView(
-          child: Center(
-              child: Column(
+        leadingWidth: 72,
+        leading: FittedBox(
+            fit: BoxFit.cover,
+            child: Row(
+              children: const <Widget>[
+                Icon(Icons.arrow_back),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                    child: CircleAvatar(
+                      child: Text('AS'),
+                    )),
+              ],
+            )),
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
             children: [
               const Image(
                 image: NetworkImage('../asset/discount_photo.jpg'),
               ),
               ListTile(
-                title: const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                title: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                   child: Text(
-                    'ASport 40% off over \$500',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    pairing.item,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ),
                 subtitle: Column(
@@ -48,18 +80,20 @@ class B2C extends StatelessWidget {
                     Row(
                       children: [
                         RichText(
-                          text: const TextSpan(
+                          text: TextSpan(
                             text: 'Post by ',
-                            style: TextStyle(color: Colors.grey),
+                            style: const TextStyle(color: Colors.grey),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: "ASport Official",
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
+                                text: pairing.postedBy,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        Icon(
+                        const Icon(
                           Icons.check_circle,
                           size: 14,
                           color: Color(0xFF0085FF),
@@ -67,7 +101,7 @@ class B2C extends StatelessWidget {
                       ],
                     ),
                     Row(
-                      children: [
+                      children: const [
                         Text('4.5', style: TextStyle(color: Color(0xFF686868))),
                         Icon(Icons.star, color: Colors.amber, size: 14),
                         Icon(Icons.star, color: Colors.amber, size: 14),
@@ -87,28 +121,26 @@ class B2C extends StatelessWidget {
                   ],
                 ),
                 trailing: Column(
-                  children: const [
+                  children: [
                     Text(
-                      '23 Likes\n336 people joined',
-                      style: TextStyle(color: Color(0xFF9F9F9F)),
+                      '${pairing.liked} Likes\n336 people joined',
+                      style: const TextStyle(color: Color(0xFF9F9F9F)),
                       textAlign: TextAlign.right,
                     ),
                   ],
                 ),
               ),
-              ListTile(
-                trailing: SizedBox(
-                  height: 20,
-                  width: 105,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
-                      CircleAvatar(
-                        child: Text('AS'),
-                      ),
-                      Text('3 days left'),
-                    ],
-                  ),
+              Padding(
+                padding: standardPadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    const CircleAvatar(
+                      child: Text('AS'),
+                    ),
+                    const Padding(padding: EdgeInsets.only(left: 8)),
+                    Text(displayPostedDateOrDeadline()),
+                  ],
                 ),
               ),
               const ListTile(
@@ -151,14 +183,27 @@ class B2C extends StatelessWidget {
                   ),
                 ),
               ),
-              const ListTile(
-                  title: Text(
-                'You may also interest...',
-                style: TextStyle(
-                    decoration: TextDecoration.underline,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18),
-              )),
+              const Padding(
+                padding: EdgeInsets.all(16),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'You may also be interested in...',
+                    style: TextStyle(
+                      decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 280,
+                child: CommunityList(
+                  posts: PairingProvider.getSimilarItems(),
+                ),
+              ),
               const Divider(
                 height: 20,
                 thickness: 1,
@@ -166,24 +211,31 @@ class B2C extends StatelessWidget {
                 endIndent: 0,
                 color: Colors.grey,
               ),
-              Row(children: [
-                const SizedBox(width: 20, height: 30),
-                SizedBox(
-                  width: 400, // <-- Your width
-                  height: 40,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: const Color(0xFFFF7276),
-                        textStyle: const TextStyle(fontSize: 20)),
-                    onPressed: () {},
-                    child: const Text('New Request'),
-                  ),
+              Padding(
+                padding: standardPadding,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: const Color(0xFFFF7276),
+                              textStyle: const TextStyle(fontSize: 20)),
+                          onPressed: () {},
+                          child: const Text('New Request'),
+                        ),
+                      ),
+                    ),
+                    const Icon(Icons.chat_outlined, size: 35),
+                  ],
                 ),
-                const SizedBox(width: 20, height: 10),
-                const Icon(Icons.chat_outlined, size: 35)
-              ])
+              )
             ],
-          )),
-        ));
+          ),
+        ),
+      ),
+    );
   }
 }
