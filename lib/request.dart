@@ -1,19 +1,28 @@
+import 'package:crowdbuy/pairing_provider.dart';
 import 'package:flutter/material.dart';
 
 class RequestPage extends StatefulWidget {
-  const RequestPage({Key? key}) : super(key: key);
+  final Pairing? pairing;
+  const RequestPage({Key? key, this.pairing}) : super(key: key);
 
   @override
   Request createState() => Request();
 }
 
 class Request extends State<RequestPage> {
-  final TextEditingController subjectEditingController =
-      TextEditingController();
+  final Pairing? pairing;
+
+  Request({this.pairing});
+
+  TextEditingController subjectEditingController =
+      TextEditingController(text: '');
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      subjectEditingController.text = widget.pairing?.item ?? '';
+    });
   }
 
   @override

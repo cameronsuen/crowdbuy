@@ -1,8 +1,7 @@
-import 'package:crowdbuy/pairing.dart';
+import 'package:crowdbuy/pairing_provider.dart';
 import 'package:crowdbuy/request.dart';
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
-import 'package:uuid/uuid.dart';
 
 class ChatList extends StatefulWidget {
   const ChatList({Key? key}) : super(key: key);
@@ -35,11 +34,11 @@ class ChatListState extends State<ChatList> {
     DateTime twelveMinAgo = now.subtract(const Duration(minutes: 12));
     List<Pairing> pairings = <Pairing>[
       Pairing('ASport 40% off over \$500', 'ASport Offical',
-          'Nano Plaza - ASport', false, fiveMinAgo, threeDaysAfter, 10),
+          'Nano Plaza - ASport', false, fiveMinAgo, threeDaysAfter, 10, ""),
       Pairing('ASport Wait for Pair!!!', 'Koey98', 'Nano Plaza - ASport', false,
-          fiveMinAgo, twoWeeksAfter, 5),
+          fiveMinAgo, twoWeeksAfter, 5, ""),
       Pairing('\$700 for 2 pairs of shoes', 'Jack_Smith',
-          'Nano Plaza - Boutique', false, twelveMinAgo, twoWeeksAfter, 10),
+          'Nano Plaza - Boutique', false, twelveMinAgo, twoWeeksAfter, 10, ""),
     ];
 
     // This method is rerun every time setState is called, for instance as done

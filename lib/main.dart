@@ -1,8 +1,7 @@
-import 'package:crowdbuy/pairing.dart';
+import 'package:crowdbuy/pairing_provider.dart';
 import 'package:crowdbuy/request.dart';
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
-import 'package:uuid/uuid.dart';
 
 import 'b2c.dart';
 import 'account.dart';
@@ -61,55 +60,37 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int index = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  Widget getCurrentPage() {
+    switch (index) {
+      case 1:
+        return CommunityPage(PairingProvider.getFeaturedItems());
+      /*case 2:
+        return const ChatPage();*/
+      case 0:
+      default:
+        return PairingList(items: PairingProvider.getNearby());
+    }
+  }
+
+  FloatingActionButton? getActionButtonIfNeeded() {
+    switch (index) {
+      case 1:
+      case 2:
+        return null;
+      case 0:
+      default:
+        return FloatingActionButton(
+          onPressed: () {},
+          tooltip: 'New Request',
+          child: const Icon(Icons.add),
+        );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Bad: testing only
-    DateTime now = DateTime.now();
-    DateTime threeDaysAfter = now.add(const Duration(days: 3));
-    DateTime oneWeekAfter = now.add(const Duration(days: 7));
-    DateTime twoWeeksAfter = now.add(const Duration(days: 14));
-    DateTime fiveMinAgo = now.subtract(const Duration(minutes: 5));
-    DateTime twelveMinAgo = now.subtract(const Duration(minutes: 12));
-
-    DateTime twoDaysAgo = now.subtract(const Duration(days: 2));
-    DateTime threeDaysAgo = now.subtract(const Duration(days: 3));
-    DateTime fiveDaysAgo = now.subtract(const Duration(days: 5));
-
-    List<Pairing> pairings = <Pairing>[
-      Pairing('ASport 40% off over \$500', 'ASport Offical',
-          'Nano Plaza - ASport', false, fiveMinAgo, threeDaysAfter, 5),
-      Pairing('ASport Wait for Pair!!!', 'Koey98', 'Nano Plaza - ASport', false,
-          fiveMinAgo, twoWeeksAfter, 8),
-      Pairing('\$700 for 2 pairs of shoes', 'Jack_Smith',
-          'Nano Plaza - Boutique', false, twelveMinAgo, twoWeeksAfter, 10),
-      Pairing('BSport 20% off over \$800', 'BSport Offical',
-          'Mega Plaza - BSport', false, fiveDaysAgo, threeDaysAfter, 10),
-      Pairing('ASport Wait for Pair!!!', 'Koey98', 'Nano Plaza - ASport', false,
-          twoDaysAgo, oneWeekAfter, 20),
-      Pairing('\$700 for 2 pairs of shoes', 'Jack_Smith',
-          'Nano Plaza - Boutique', false, threeDaysAgo, twoWeeksAfter, 3),
-    ];
-
-    var categories = <PairingCategory>[
-      PairingCategory("Latest",
-          pairings.where((p) => p.postedDate.isAfter(twoDaysAgo)).toList()),
-      PairingCategory("Popular", pairings.where((p) => p.liked > 5).toList()),
-      PairingCategory("Last Minute Offer",
-          pairings.where((p) => p.deadline.isBefore(oneWeekAfter)).toList()),
-    ];
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -122,22 +103,16 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         //child: PairingList(items: pairings),
-        child: CommunityPage(categories),
+        child: getCurrentPage(),
       ),
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),*/
+      floatingActionButton: getActionButtonIfNeeded(),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
-        // onTap: (int index) {
-        //   setState(() {
-        //     this.index = index;
-        //   }
-        //   );
-        //   _navigateToScreens(index);
-        // },
+        currentIndex: index,
+        onTap: (int index) {
+          setState(() {
+            this.index = index;
+          });
+        },
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -162,9 +137,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Route _createRoute() {
+Route makeRequest(Pairing pairing) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => const Calculator(),
+    pageBuilder: (context, animation, secondaryAnimation) =>
+        RequestPage(pairing: pairing),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },
@@ -291,7 +267,7 @@ class PairingItem extends StatelessWidget {
                       ]))
                 ]),
             onTap: () {
-              Navigator.of(context).push(_createRoute());
+              Navigator.of(context).push(makeRequest(pairing));
             }));
   }
 }
