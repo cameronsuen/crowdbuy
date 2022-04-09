@@ -1,9 +1,7 @@
-import 'package:crowdbuy/pairing.dart';
 import 'package:crowdbuy/pairing_provider.dart';
 import 'package:crowdbuy/request.dart';
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
-import 'package:uuid/uuid.dart';
 
 import 'b2c.dart';
 import 'account.dart';
@@ -61,24 +59,37 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int index = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  Widget getCurrentPage() {
+    switch (index) {
+      case 1:
+        return CommunityPage(PairingProvider.getFeaturedItems());
+      /*case 2:
+        return const ChatPage();*/
+      case 0:
+      default:
+        return PairingList(items: PairingProvider.getNearby());
+    }
+  }
+
+  FloatingActionButton? getActionButtonIfNeeded() {
+    switch (index) {
+      case 1:
+      case 2:
+        return null;
+      case 0:
+      default:
+        return FloatingActionButton(
+          onPressed: () {},
+          tooltip: 'New Request',
+          child: const Icon(Icons.add),
+        );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    var pairings = PairingProvider.getNearby();
-    var categories = PairingProvider.getFeaturedItems();
-
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -91,22 +102,16 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         //child: PairingList(items: pairings),
-        child: CommunityPage(categories),
+        child: getCurrentPage(),
       ),
-      /*floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),*/
+      floatingActionButton: getActionButtonIfNeeded(),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
-        // onTap: (int index) {
-        //   setState(() {
-        //     this.index = index;
-        //   }
-        //   );
-        //   _navigateToScreens(index);
-        // },
+        currentIndex: index,
+        onTap: (int index) {
+          setState(() {
+            this.index = index;
+          });
+        },
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -131,10 +136,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-Route _createRoute() {
+Route makeRequest(Pairing pairing) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) =>
-        const RequestPage(),
+        RequestPage(pairing: pairing),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },
@@ -261,7 +266,7 @@ class PairingItem extends StatelessWidget {
                       ]))
                 ]),
             onTap: () {
-              Navigator.of(context).push(_createRoute());
+              Navigator.of(context).push(makeRequest(pairing));
             }));
   }
 }
