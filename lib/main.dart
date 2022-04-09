@@ -229,7 +229,7 @@ class PairingItem extends StatelessWidget {
             leading: Column(
               children: <Widget>[
                 (CircleAvatar(
-                  backgroundColor: Colors.deepOrangeAccent,
+                  backgroundColor: Colors.white,
                   child: Image(image: NetworkImage(pairing.postedBy.avatarUrl)),
                   //child: Text('${pairing.postedBy[0]} ${pairing.postedBy[1]}'),
                 ))

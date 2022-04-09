@@ -103,9 +103,13 @@ class CommunityItem extends StatelessWidget {
               ),
               subtitle: Row(
                 children: <Widget>[
-                  CircleAvatar(
-                    radius: 8,
-                    child: Text(pairing.postedBy.username[0]),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 4),
+                    child: CircleAvatar(
+                      radius: 8,
+                      child: Image(
+                          image: NetworkImage(pairing.postedBy.avatarUrl)),
+                    ),
                   ),
                   Text(pairing.postedBy.username),
                 ],

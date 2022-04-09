@@ -43,19 +43,24 @@ class B2C extends StatelessWidget {
           child: Stack(
             alignment: Alignment.topRight,
             children: [
-              const Icon(Icons.favorite_outline),
+              const Padding(
+                child: Icon(Icons.favorite_outline),
+                padding: EdgeInsets.all(4),
+              ),
               ListTile(
-                //dense: true,
                 leading: Padding(
                   padding: const EdgeInsets.only(top: 8),
                   child: CircleAvatar(
-                    backgroundColor: Colors.deepOrangeAccent,
+                    backgroundColor: Colors.white,
                     child: Image(image: NetworkImage(user.avatarUrl)),
                   ),
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 16),
-                  child: Text(user.username),
+                  child: Text(
+                    user.username,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
                 subtitle: Column(
                   //mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +71,9 @@ class B2C extends StatelessWidget {
                         RichText(
                           text: TextSpan(
                             text: '${user.rating}',
-                            //style: DefaultTextStyle.of(context).style,
+                            style: const TextStyle(
+                              color: Color(0xFF686868),
+                            ),
                           ),
                         ),
                         const Icon(Icons.star, size: 12, color: Colors.amber),
@@ -75,7 +82,9 @@ class B2C extends StatelessWidget {
                     RichText(
                       text: const TextSpan(
                         text: "5 minutes ago",
-                        //style: DefaultTextStyle.of(context).style,
+                        style: TextStyle(
+                          color: Color(0xFF9F9F9F),
+                        ),
                       ),
                     ),
                   ],
@@ -97,12 +106,14 @@ class B2C extends StatelessWidget {
         leading: FittedBox(
             fit: BoxFit.cover,
             child: Row(
-              children: const <Widget>[
-                Icon(Icons.arrow_back),
+              children: <Widget>[
+                const Icon(Icons.arrow_back),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                     child: CircleAvatar(
-                      child: Text('AS'),
+                      backgroundColor: Colors.white,
+                      child: Image(
+                          image: NetworkImage(pairing.postedBy.avatarUrl)),
                     )),
               ],
             )),
@@ -152,14 +163,16 @@ class B2C extends StatelessWidget {
                       ],
                     ),
                     Row(
-                      children: const [
-                        Text('4.5', style: TextStyle(color: Color(0xFF686868))),
-                        Icon(Icons.star, color: Colors.amber, size: 14),
-                        Icon(Icons.star, color: Colors.amber, size: 14),
-                        Icon(Icons.star, color: Colors.amber, size: 14),
-                        Icon(Icons.star, color: Colors.amber, size: 14),
-                        Icon(Icons.star_half, color: Colors.amber, size: 14),
-                        Text(
+                      children: [
+                        Text('${pairing.postedBy.rating}',
+                            style: const TextStyle(color: Color(0xFF686868))),
+                        const Icon(Icons.star, color: Colors.amber, size: 14),
+                        const Icon(Icons.star, color: Colors.amber, size: 14),
+                        const Icon(Icons.star, color: Colors.amber, size: 14),
+                        const Icon(Icons.star, color: Colors.amber, size: 14),
+                        const Icon(Icons.star_half,
+                            color: Colors.amber, size: 14),
+                        const Text(
                           '(29)',
                           style: TextStyle(color: Color(0xFFB0B0B0)),
                         )
@@ -186,8 +199,11 @@ class B2C extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    const CircleAvatar(
-                      child: Text('AS'),
+                    CircleAvatar(
+                      radius: 12,
+                      backgroundColor: Colors.white,
+                      child: Image(
+                          image: NetworkImage(pairing.postedBy.avatarUrl)),
                     ),
                     const Padding(padding: EdgeInsets.only(left: 8)),
                     Text(displayPostedDateOrDeadline()),
