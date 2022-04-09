@@ -1,4 +1,4 @@
-import 'package:crowdbuy/pairing.dart';
+import 'package:crowdbuy/pairing_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
 
@@ -27,49 +27,16 @@ class CommunityPage extends StatelessWidget {
         ),
       ),
     );
-
-    /*var entries = categories.entries
-        .map(
-          (e) => Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Text(
-                  e.key,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                    width: 200,
-                    height: 200,
-                    child: CommunityList(posts: e.value)),
-                Divider(color: Theme.of(context).hintColor, height: 1),
-              ],
-            ),
-          ),
-        )
-        .toList();
-    return Column(
-      children: entries/
-      mainAxisAlignment: MainAxisAlignment.start,
-    );*/
   }
 }
 
 class CommunityItem extends StatelessWidget {
   final Pairing pairing;
   const CommunityItem(this.pairing, {Key? key}) : super(key: key);
-  String displayPostedDateOrDeadline() {
+  String displayDeadline() {
     DateTime now = DateTime.now();
-    DateTime fiveDaysTillNow = now.add(const Duration(days: 5));
     Duration timeDiff;
-    String leftOrAgo;
-    if (pairing.deadline.isBefore(fiveDaysTillNow)) {
-      timeDiff = pairing.deadline.difference(now);
-      leftOrAgo = "left";
-    } else {
-      timeDiff = now.difference(pairing.postedDate);
-      leftOrAgo = "ago";
-    }
+    timeDiff = pairing.deadline.difference(now);
     DurationTersity tersity = DurationTersity.day;
     if (timeDiff < const Duration(minutes: 1)) {
       tersity = DurationTersity.second;
@@ -77,9 +44,16 @@ class CommunityItem extends StatelessWidget {
       tersity = DurationTersity.minute;
     } else if (timeDiff < const Duration(days: 1)) {
       tersity = DurationTersity.hour;
+    } else if (timeDiff < const Duration(days: 20)) {
+      tersity = DurationTersity.day;
     }
 
-    return '${prettyDuration(timeDiff, tersity: tersity, abbreviated: true)} $leftOrAgo';
+    return '${prettyDuration(
+      timeDiff,
+      tersity: tersity,
+      upperTersity: DurationTersity.day,
+      abbreviated: false,
+    )} left';
   }
 
   @override
@@ -90,26 +64,52 @@ class CommunityItem extends StatelessWidget {
       child: Card(
         child: Column(
           children: <Widget>[
-            const Image(
-              image: NetworkImage("../asset/discount-tile1.jpg"),
-              fit: BoxFit.fill,
+            SizedBox(
+              height: 200,
+              child: ClipRect(
+                clipBehavior: Clip.hardEdge,
+                child: Stack(
+                  alignment: Alignment.topRight,
+                  children: <Widget>[
+                    Image(
+                      image: NetworkImage(pairing.bannerUrl),
+                      fit: BoxFit.cover,
+                    ),
+                    Text(
+                      displayDeadline(),
+                      style: const TextStyle(
+                          backgroundColor: Color.fromARGB(80, 0, 0, 0),
+                          color: Colors.white),
+                    ),
+                  ],
+                ),
+              ),
             ),
             ListTile(
-              title: const Text("2nd item at \$1"),
+              title: Text(
+                pairing.item,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              dense: true,
+              visualDensity: const VisualDensity(
+                horizontal: VisualDensity.minimumDensity,
+                vertical: -1,
+              ),
               trailing: IconButton(
                 icon: Icon(
                   pairing.favorite ? Icons.favorite : Icons.favorite_border,
                 ),
                 onPressed: onPressed,
               ),
-              /*subtitle: Row(
-                  children: <Widget>[
-                    CircleAvatar(
-                      child: Text("${pairing.item[0]}${pairing.item[1]}"),
-                    ),
-                    Text(pairing.item),
-                  ],
-                ),*/
+              subtitle: Row(
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 8,
+                    child: Text(pairing.postedBy[0]),
+                  ),
+                  Text(pairing.postedBy),
+                ],
+              ),
             ),
           ],
         ),

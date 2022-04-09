@@ -1,4 +1,4 @@
-import 'package:uuid/uuid.dart';
+/*import 'package:uuid/uuid.dart';
 
 class PairingCategory {
   final String category;
@@ -19,4 +19,4 @@ class Pairing {
       this.postedDate, this.deadline, this.liked,
       [String? id])
       : id = id ?? const Uuid().v1.toString();
-}
+}*/
