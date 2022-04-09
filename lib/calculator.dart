@@ -15,102 +15,82 @@ class Calculator extends StatelessWidget {
         ),
       ),
       body: Center(
-          child: Column(
-        children: [
-          const Image(
-            image: NetworkImage('../asset/discount_photo.jpg'),
-          ),
-          ListTile(
-              title: const Text('ASport 40% off over \$500',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
-              subtitle: RichText(
-                  text: const TextSpan(
-                      text: 'Post by ',
-                      style: TextStyle(color: Colors.grey),
-                      children: <TextSpan>[
-                    TextSpan(
-                        text: "ASport Official",
-                        style: TextStyle(fontWeight: FontWeight.bold))
-                  ]))),
-          const ListTile(
-              trailing: Text('3 days left'),
-              subtitle: Text(
-                'Clothing',
-                style: TextStyle(color: Colors.blue),
-              )),
-          const ListTile(
-              title: Text(
-            'Outstanding Requests',
-            style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontWeight: FontWeight.bold,
-                fontSize: 18),
-          )),
-          Card(
-            child: ListTile(
-              leading: Column(
-                children: const <Widget>[
-                  (CircleAvatar(
-                    backgroundColor: Colors.deepOrangeAccent,
-                    child: Text("K"),
-                  )),
-                ],
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-              ),
-              title: const Text("Koey98"),
-              isThreeLine: true,
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  RichText(
-                    text: const TextSpan(
-                      text: '4.8',
-                      //style: DefaultTextStyle.of(context).style,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        debugPrint('Received click');
+                      },
+                      style: ButtonStyle(
+                        // padding: MaterialStateProperty.all<EdgeInsets>(
+                        //     const EdgeInsets.symmetric(horizontal: 40)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero,
+                            side: BorderSide(color: Color(0xFF737373)),
+                          ),
+                        ),
+                        backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => const Color(0xFFC4C4C4),
+                        ),
+                      ),
+                      child: const Text(
+                        'Discount by %',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
                     ),
                   ),
-                  RichText(
-                    text: const TextSpan(
-                      text: "5 minutes ago",
-                      //style: DefaultTextStyle.of(context).style,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        debugPrint('Received click');
+                      },
+                      style: ButtonStyle(
+                        // padding: MaterialStateProperty.all<EdgeInsets>(
+                        //     const EdgeInsets.symmetric(horizontal: 40)),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero,
+                            side: BorderSide(color: Color(0xFF737373)),
+                          ),
+                        ),
+                      ),
+                      child: const Text(
+                        'Discount by Piece',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF6A6A6A)),
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-          const ListTile(
-              title: Text(
-            'You may also interest...',
-            style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontWeight: FontWeight.bold,
-                fontSize: 18),
-          )),
-          const Divider(
-            height: 20,
-            thickness: 1,
-            indent: 0,
-            endIndent: 0,
-            color: Colors.grey,
-          ),
-          Row(children: [
-            const SizedBox(width: 20, height: 30),
-            SizedBox(
-              width: 400, // <-- Your width
-              height: 40,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: const Color(0xFFFF7276),
-                    textStyle: const TextStyle(fontSize: 20)),
-                onPressed: () {},
-                child: const Text('New Request'),
-              ),
-            ),
-            const SizedBox(width: 20, height: 40),
-            const Icon(Icons.chat_outlined, size: 35)
-          ])
-        ],
-      )),
+            Row(
+              children: const [
+                Text("Discount"),
+                // TextField(
+                //   decoration: InputDecoration(
+                //     // border: InputBorder.none,
+                //     hintText: "Remarks",
+                //   ),
+                // ),
+              ],
+            )
+          ],
+        ),
+      ),
     );
   }
 }
