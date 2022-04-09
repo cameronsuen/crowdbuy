@@ -68,6 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
         return CommunityPage(PairingProvider.getFeaturedItems());
       /*case 2:
         return const ChatPage();*/
+      case 3:
+        return const Account();
       case 0:
       default:
         return PairingList(items: PairingProvider.getNearby());
@@ -139,8 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Route makeRequest(Pairing pairing) {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        RequestPage(pairing: pairing),
+    pageBuilder: (context, animation, secondaryAnimation) => B2C(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },
