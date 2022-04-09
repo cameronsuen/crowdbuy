@@ -113,7 +113,7 @@ class PairingProvider {
       Pairing('2nd Item at \$1', asport, 'Nano Plaza - ASport', false,
           fiveMinAgo, tenDaysAfter, 10, '../asset/discount-tile1.jpg', []),
       Pairing(
-        'Sharing on  BShop Discount',
+        'Sharing on BShop Discount',
         koey98,
         'Nano Plaza - ASport',
         false,

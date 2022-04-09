@@ -38,14 +38,17 @@ class B2C extends StatelessWidget {
 
     Widget renderInterestedParty(User user) {
       return SizedBox(
-        width: 200,
+        width: 190,
         child: Card(
           child: Stack(
             alignment: Alignment.topRight,
             children: [
               const Padding(
-                child: Icon(Icons.favorite_outline),
-                padding: EdgeInsets.all(4),
+                child: Icon(
+                  Icons.favorite_outline,
+                  color: Color(0xFF9F9F9F),
+                ),
+                padding: EdgeInsets.fromLTRB(0, 4, 6, 0),
               ),
               ListTile(
                 leading: Padding(
@@ -186,10 +189,23 @@ class B2C extends StatelessWidget {
                 ),
                 trailing: Column(
                   children: [
-                    Text(
-                      '${pairing.liked} Likes\n336 people joined',
-                      style: const TextStyle(color: Color(0xFF9F9F9F)),
-                      textAlign: TextAlign.right,
+                    Stack(
+                      alignment: Alignment.topRight,
+                      children: [
+                        const Padding(
+                          child: Icon(
+                            Icons.favorite_outline,
+                            color: Color(0xFF9F9F9F),
+                            size: 16,
+                          ),
+                          padding: EdgeInsets.only(right: 50),
+                        ),
+                        Text(
+                          '${pairing.liked} Likes\n336 people joined',
+                          style: const TextStyle(color: Color(0xFF9F9F9F)),
+                          textAlign: TextAlign.right,
+                        ),
+                      ],
                     ),
                   ],
                 ),
