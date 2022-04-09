@@ -9,6 +9,7 @@ import 'account.dart';
 import 'chat.dart';
 import 'chat_list.dart';
 import 'community.dart';
+import 'calculator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -163,8 +164,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Route _createRoute() {
   return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        const RequestPage(),
+    pageBuilder: (context, animation, secondaryAnimation) => const Calculator(),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return child;
     },
