@@ -40,39 +40,48 @@ class B2C extends StatelessWidget {
       return SizedBox(
         width: 200,
         child: Card(
-          child: ListTile(
-            //dense: true,
-            leading: Padding(padding: const EdgeInsets.only(top: 8), child:CircleAvatar(
-              backgroundColor: Colors.deepOrangeAccent,
-              child: Image(image: NetworkImage(user.avatarUrl)),
-            ),),
-            title: Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Text(user.username),
-            ),
-            subtitle: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  children: [
+          child: Stack(
+            alignment: Alignment.topRight,
+            children: [
+              const Icon(Icons.favorite_outline),
+              ListTile(
+                //dense: true,
+                leading: Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: CircleAvatar(
+                    backgroundColor: Colors.deepOrangeAccent,
+                    child: Image(image: NetworkImage(user.avatarUrl)),
+                  ),
+                ),
+                title: Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Text(user.username),
+                ),
+                subtitle: Column(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            text: '${user.rating}',
+                            //style: DefaultTextStyle.of(context).style,
+                          ),
+                        ),
+                        const Icon(Icons.star, size: 12, color: Colors.amber),
+                      ],
+                    ),
                     RichText(
-                      text: TextSpan(
-                        text: '${user.rating}',
+                      text: const TextSpan(
+                        text: "5 minutes ago",
                         //style: DefaultTextStyle.of(context).style,
                       ),
                     ),
-                    const Icon(Icons.star, size: 12, color: Colors.amber),
                   ],
                 ),
-                RichText(
-                  text: const TextSpan(
-                    text: "5 minutes ago",
-                    //style: DefaultTextStyle.of(context).style,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       );
