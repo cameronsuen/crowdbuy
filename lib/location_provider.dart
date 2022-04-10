@@ -139,7 +139,7 @@ class LocationProvider {
 
   static double getDistance(LocationData loc1, LocationData loc2) {
     // formula from https://stackoverflow.com/a/54138876
-    var p = 0.017453292519943295;
+    var p = pi / 180.0;
     var lat1 = loc1.latitude ?? 0;
     var lon1 = loc1.longitude ?? 0;
     var lat2 = loc2.latitude ?? 0;
