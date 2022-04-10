@@ -67,8 +67,8 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         return CommunityPage(PairingProvider.getFeaturedItems());
       case 2:
-        // return const ChatPage();
-        return const Calculator();
+        return const ChatPage();
+      // return const Calculator();
       case 3:
         return const Account();
       case 0:

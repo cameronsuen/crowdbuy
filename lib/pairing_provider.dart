@@ -41,7 +41,7 @@ class Pairing {
 
 class PairingProvider {
   static var koey98 = User(
-    username: 'koey98',
+    username: 'Steven',
     rating: 4.5,
     avatarUrl: '../asset/propic/koey98.png',
   );
@@ -66,7 +66,7 @@ class PairingProvider {
     avatarUrl: '../asset/propic/boutique.png',
   );
   static var currentUser = User(
-    username: 'crowdBuy',
+    username: 'Evans',
     rating: 4.9,
     avatarUrl: '../asset/propic/me.png',
   );
