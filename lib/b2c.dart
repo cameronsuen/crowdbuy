@@ -238,7 +238,10 @@ class B2C extends StatelessWidget {
                                     NetworkImage(pairing.postedBy.avatarUrl)),
                           ),
                           const Padding(padding: EdgeInsets.only(left: 8)),
-                          Text(displayPostedDateOrDeadline()),
+                          Text(
+                            displayPostedDateOrDeadline(),
+                            style: const TextStyle(color: Color(0xFF9F9F9F)),
+                          ),
                         ],
                       ),
                     ),
@@ -302,7 +305,7 @@ class B2C extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: standardPadding,
+            padding: const EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -311,6 +314,7 @@ class B2C extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           primary: const Color(0xFFFF7276),
                           textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () {
