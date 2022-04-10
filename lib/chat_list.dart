@@ -32,7 +32,7 @@ class ChatListState extends State<ChatList> {
     DateTime twoWeeksAfter = now.add(const Duration(days: 14));
     DateTime fiveMinAgo = now.subtract(const Duration(minutes: 5));
     DateTime twelveMinAgo = now.subtract(const Duration(minutes: 12));
-    List<Pairing> pairings = PairingProvider.getNearby();
+    List<Pairing> pairings = PairingProvider().getNearby();
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.

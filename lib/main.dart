@@ -61,11 +61,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int index = 0;
+  PairingProvider provider = PairingProvider();
 
   Widget getCurrentPage() {
     switch (index) {
       case 1:
-        return CommunityPage(PairingProvider.getFeaturedItems());
+        return CommunityPage(provider.getFeaturedItems());
       case 2:
         return const ChatPage();
       // return const Calculator();
@@ -73,7 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
         return const Account();
       case 0:
       default:
-        return PairingList(items: PairingProvider.getNearby());
+        return PairingList(
+          items: provider.getNearby(),
+          makeNewRequest: makeNewRequest,
+        );
     }
   }
 
@@ -90,6 +94,16 @@ class _MyHomePageState extends State<MyHomePage> {
           child: const Icon(Icons.add),
         );
     }
+  }
+
+  makeNewRequest(BuildContext context, Pairing pairing) async {
+    var newPairing = await Navigator.of(context).push(
+      makeRequest(pairing),
+    ) as Pairing;
+
+    provider.submitRequest(newPairing);
+
+    setState(() {});
   }
 
   @override
@@ -198,7 +212,12 @@ class FloatingAppBar extends StatelessWidget with PreferredSizeWidget {
 
 class PairingItem extends StatelessWidget {
   final Pairing pairing;
-  const PairingItem(this.pairing, {Key? key}) : super(key: key);
+  final void Function(BuildContext context, Pairing pairing) makeNewRequest;
+  const PairingItem({
+    Key? key,
+    required this.pairing,
+    required this.makeNewRequest,
+  }) : super(key: key);
   String displayPostedDateOrDeadline() {
     DateTime now = DateTime.now();
     DateTime fiveDaysTillNow = now.add(const Duration(days: 5));
@@ -271,21 +290,29 @@ class PairingItem extends StatelessWidget {
                       ]))
                 ]),
             onTap: () {
-              Navigator.of(context).push(makeRequest(pairing));
+              makeNewRequest(context, pairing);
             }));
   }
 }
 
 class PairingList extends StatelessWidget {
   final List<Pairing> items;
-  const PairingList({Key? key, required this.items}) : super(key: key);
+  final void Function(BuildContext context, Pairing pairing) makeNewRequest;
+  const PairingList({
+    Key? key,
+    required this.items,
+    required this.makeNewRequest,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, index) {
-          return PairingItem(items[index]);
+          return PairingItem(
+            pairing: items[index],
+            makeNewRequest: makeNewRequest,
+          );
         });
   }
 }

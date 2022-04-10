@@ -291,7 +291,9 @@ class B2C extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                               primary: const Color(0xFFFF7276),
                               textStyle: const TextStyle(fontSize: 20)),
-                          onPressed: () {},
+                          onPressed: () {
+                            makeNewRequest(context);
+                          },
                           child: const Text('New Request'),
                         ),
                       ),
@@ -305,5 +307,21 @@ class B2C extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  makeNewRequest(BuildContext context) {
+    Pairing newPairing = Pairing(
+      item: pairing.item,
+      location: pairing.location,
+      postedBy: pairing.postedBy,
+      favorite: pairing.favorite,
+      postedDate: pairing.postedDate,
+      deadline: pairing.deadline,
+      liked: pairing.liked,
+      bannerUrl: pairing.bannerUrl,
+      requesters: [],
+    );
+
+    Navigator.pop(context, newPairing);
   }
 }
