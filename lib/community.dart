@@ -2,10 +2,17 @@ import 'package:crowdbuy/pairing_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
 
+import 'b2c.dart';
+
 class CommunityPage extends StatelessWidget {
   final List<PairingCategory> categories;
+  final void Function(BuildContext context, Pairing pairing) makeNewRequest;
 
-  const CommunityPage(this.categories, {Key? key}) : super(key: key);
+  const CommunityPage({
+    required this.categories,
+    required this.makeNewRequest,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,10 @@ class CommunityPage extends StatelessWidget {
             ),
             SizedBox(
                 height: 275,
-                child: CommunityList(posts: categories[index].pairings)),
+                child: CommunityList(
+                  posts: categories[index].pairings,
+                  makeNewRequest: makeNewRequest,
+                )),
             Divider(color: Theme.of(context).hintColor, height: 1),
           ],
         ),
@@ -32,7 +42,12 @@ class CommunityPage extends StatelessWidget {
 
 class CommunityItem extends StatelessWidget {
   final Pairing pairing;
-  const CommunityItem(this.pairing, {Key? key}) : super(key: key);
+  final void Function(BuildContext context, Pairing pairing) makeNewRequest;
+  const CommunityItem({
+    required this.makeNewRequest,
+    required this.pairing,
+    Key? key,
+  }) : super(key: key);
   String displayDeadline() {
     DateTime now = DateTime.now();
     Duration timeDiff;
@@ -60,7 +75,7 @@ class CommunityItem extends StatelessWidget {
   Widget build(BuildContext context) {
     //return const Text("hello");
     return SizedBox(
-      width: 200,
+      width: 240,
       child: Card(
         child: Column(
           children: <Widget>[
@@ -114,6 +129,9 @@ class CommunityItem extends StatelessWidget {
                   Text(pairing.postedBy.username),
                 ],
               ),
+              onTap: () {
+                makeNewRequest(context, pairing);
+              },
             ),
           ],
         ),
@@ -126,7 +144,10 @@ class CommunityItem extends StatelessWidget {
 
 class CommunityList extends StatelessWidget {
   final List<Pairing> posts;
-  const CommunityList({Key? key, required this.posts}) : super(key: key);
+  final void Function(BuildContext context, Pairing pairing) makeNewRequest;
+  const CommunityList(
+      {Key? key, required this.posts, required this.makeNewRequest})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +155,10 @@ class CommunityList extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: posts.length,
       itemBuilder: (context, index) {
-        return CommunityItem(posts[index]);
+        return CommunityItem(
+          pairing: posts[index],
+          makeNewRequest: makeNewRequest,
+        );
       },
     );
   }

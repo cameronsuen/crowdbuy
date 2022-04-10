@@ -66,7 +66,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget getCurrentPage() {
     switch (index) {
       case 1:
-        return CommunityPage(provider.getFeaturedItems());
+        return CommunityPage(
+          categories: provider.getFeaturedItems(),
+          makeNewRequest: makeNewRequest,
+        );
       case 2:
         return const ChatPage();
       // return const Calculator();

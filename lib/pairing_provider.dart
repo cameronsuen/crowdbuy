@@ -62,7 +62,7 @@ class PairingProvider {
         postedDate: fiveMinAgo,
         deadline: threeDaysAfter,
         liked: 5,
-        bannerUrl: "",
+        bannerUrl: '../asset/discount-tile1.jpg',
         requesters: [koey98, aby],
       ),
       Pairing(
@@ -73,7 +73,7 @@ class PairingProvider {
         postedDate: fiveMinAgo,
         deadline: twoWeeksAfter,
         liked: 8,
-        bannerUrl: "",
+        bannerUrl: '../asset/discount-tile2.jpg',
         requesters: [],
       ),
       Pairing(
@@ -84,7 +84,7 @@ class PairingProvider {
         postedDate: twelveMinAgo,
         deadline: twoWeeksAfter,
         liked: 10,
-        bannerUrl: "",
+        bannerUrl: '../asset/discount-tile3.jpg',
         requesters: [],
       ),
       Pairing(
@@ -95,7 +95,7 @@ class PairingProvider {
         postedDate: fiveDaysAgo,
         deadline: threeDaysAfter,
         liked: 10,
-        bannerUrl: "",
+        bannerUrl: '../asset/discount-tile4.jpg',
         requesters: [],
       ),
       Pairing(
@@ -106,7 +106,7 @@ class PairingProvider {
         postedDate: twoDaysAgo,
         deadline: oneWeekAfter,
         liked: 20,
-        bannerUrl: "",
+        bannerUrl: '../asset/discount-tile1.jpg',
         requesters: [],
       ),
       Pairing(
@@ -117,7 +117,7 @@ class PairingProvider {
         postedDate: threeDaysAgo,
         deadline: twoWeeksAfter,
         liked: 3,
-        bannerUrl: "",
+        bannerUrl: '../asset/discount-tile2.jpg',
         requesters: [],
       ),
     ];
@@ -214,7 +214,7 @@ class PairingProvider {
     DateTime twoDaysAgo = now.subtract(const Duration(days: 2));
     DateTime oneDayAgo = now.subtract(const Duration(days: 1));
 
-    var pairings = <Pairing>[
+    /*var pairings = <Pairing>[
       Pairing(
         item: '2nd Item at \$1',
         postedBy: asport,
@@ -248,7 +248,7 @@ class PairingProvider {
         bannerUrl: '../asset/discount-tile4.jpg',
         requesters: [],
       ),
-    ];
+    ];*/
 
     var categories = <PairingCategory>[
       PairingCategory("Latest",

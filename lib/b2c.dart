@@ -276,6 +276,7 @@ class B2C extends StatelessWidget {
                 height: 280,
                 child: CommunityList(
                   posts: PairingProvider.getSimilarItems(),
+                  makeNewRequest: makeNewRequest,
                 ),
               ),
               const Divider(
@@ -298,7 +299,7 @@ class B2C extends StatelessWidget {
                               primary: const Color(0xFFFF7276),
                               textStyle: const TextStyle(fontSize: 20)),
                           onPressed: () {
-                            makeNewRequest(context);
+                            makeNewRequest(context, pairing);
                           },
                           child: const Text('New Request'),
                         ),
@@ -324,19 +325,7 @@ class B2C extends StatelessWidget {
     );
   }
 
-  makeNewRequest(BuildContext context) async {
-    /*Pairing newPairing = Pairing(
-      item: pairing.item,
-      location: pairing.location,
-      postedBy: pairing.postedBy,
-      favorite: pairing.favorite,
-      postedDate: pairing.postedDate,
-      deadline: pairing.deadline,
-      liked: pairing.liked,
-      bannerUrl: pairing.bannerUrl,
-      requesters: [],
-    );*/
-
+  makeNewRequest(BuildContext context, Pairing pairing) async {
     var newPairing = await Navigator.of(context).push(
       makeRequest(pairing),
     ) as Pairing;
