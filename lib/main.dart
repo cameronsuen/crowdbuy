@@ -1,7 +1,9 @@
+import 'package:crowdbuy/location_provider.dart';
 import 'package:crowdbuy/pairing_provider.dart';
 import 'package:crowdbuy/request.dart';
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
+import 'package:location/location.dart';
 
 import 'b2c.dart';
 import 'account.dart';
@@ -62,6 +64,23 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int index = 0;
   PairingProvider provider = PairingProvider();
+  LocationProvider locationProvider = LocationProvider();
+  LocationData currentLocation = LocationProvider.central;
+
+  @override
+  void initState() {
+    super.initState();
+    locationProvider
+        .init()
+        .then((_result) => locationProvider.getLocation())
+        .then((location) => {
+              setState(
+                () {
+                  currentLocation = location;
+                },
+              ),
+            });
+  }
 
   Widget getCurrentPage() {
     switch (index) {
@@ -78,7 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
       default:
         return PairingList(
-          items: provider.getNearby(),
+          items: provider.getNearby(currentLocation),
           makeNewRequest: makeNewRequest,
         );
     }
@@ -102,9 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
   makeNewRequest(BuildContext context, Pairing pairing) async {
     var newPairing = await Navigator.of(context).push(
       makeRequest(pairing),
-    ) as Pairing;
+    ) as Pairing?;
 
-    provider.submitRequest(newPairing);
+    if (newPairing != null) {
+      provider.submitRequest(newPairing);
+    }
 
     setState(() {});
   }
@@ -281,7 +302,7 @@ class PairingItem extends StatelessWidget {
             subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  RichText(text: TextSpan(text: pairing.location)),
+                  RichText(text: TextSpan(text: pairing.location.desc)),
                   RichText(
                       text: TextSpan(
                           text: 'Post by ',

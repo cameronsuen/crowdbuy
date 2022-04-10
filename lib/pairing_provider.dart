@@ -1,3 +1,5 @@
+import 'package:crowdbuy/location_provider.dart';
+import 'package:location/location.dart';
 import 'package:uuid/uuid.dart';
 
 class PairingCategory {
@@ -14,11 +16,17 @@ class User {
   User({required this.username, required this.rating, required this.avatarUrl});
 }
 
+class PostedLocation {
+  String desc;
+  LocationData location;
+  PostedLocation({required this.desc, required this.location});
+}
+
 class Pairing {
   String id;
   String item;
   User postedBy;
-  String location;
+  PostedLocation location;
   bool favorite;
   DateTime postedDate;
   DateTime deadline;
@@ -57,7 +65,10 @@ class PairingProvider {
       Pairing(
         item: 'ASport 40% off over \$500',
         postedBy: asport,
-        location: 'Nano Plaza - ASport',
+        location: PostedLocation(
+          desc: 'Nano Plaza - ASport',
+          location: LocationProvider.central,
+        ),
         favorite: false,
         postedDate: fiveDaysAgo,
         deadline: threeDaysAfter,
@@ -68,7 +79,10 @@ class PairingProvider {
       Pairing(
         item: 'ASport Wait for Pair!!!',
         postedBy: koey98,
-        location: 'Nano Plaza - ASport',
+        location: PostedLocation(
+          desc: 'Nano Plaza - ASport',
+          location: LocationProvider.taipo,
+        ),
         favorite: false,
         postedDate: fiveMinAgo,
         deadline: twoWeeksAfter,
@@ -79,7 +93,10 @@ class PairingProvider {
       Pairing(
         item: '\$700 for 2 pairs of shoes',
         postedBy: jack,
-        location: 'Nano Plaza - Boutique',
+        location: PostedLocation(
+          desc: 'Nano Plaza - Boutique',
+          location: LocationProvider.sf,
+        ),
         favorite: false,
         postedDate: twelveMinAgo,
         deadline: twoWeeksAfter,
@@ -90,7 +107,10 @@ class PairingProvider {
       Pairing(
         item: 'Boutique 20% off over \$800',
         postedBy: boutique,
-        location: 'Mega Plaza - Boutique',
+        location: PostedLocation(
+          desc: 'Mega Plaza - Boutique',
+          location: LocationProvider.london,
+        ),
         favorite: false,
         postedDate: fiveDaysAgo,
         deadline: threeDaysAfter,
@@ -101,7 +121,10 @@ class PairingProvider {
       Pairing(
         item: 'ASport Wait for Pair!!!',
         postedBy: koey98,
-        location: 'Nano Plaza - ASport',
+        location: PostedLocation(
+          desc: 'Nano Plaza - ASport',
+          location: LocationProvider.canberra,
+        ),
         favorite: false,
         postedDate: twoDaysAgo,
         deadline: oneWeekAfter,
@@ -112,7 +135,10 @@ class PairingProvider {
       Pairing(
         item: '\$700 for 2 pairs of shoes',
         postedBy: jack,
-        location: 'Nano Plaza - Boutique',
+        location: PostedLocation(
+          desc: 'Nano Plaza - Boutique',
+          location: LocationProvider.singapore,
+        ),
         favorite: false,
         postedDate: threeDaysAgo,
         deadline: twoWeeksAfter,
@@ -164,8 +190,12 @@ class PairingProvider {
     avatarUrl: '../asset/propic/me.png',
   );
 
-  List<Pairing> getNearby() {
-    return pairings;
+  List<Pairing> getNearby(LocationData currentLocation) {
+    return pairings
+        .where((p) =>
+            LocationProvider.getDistance(currentLocation, p.location.location) <
+            LocationProvider.nearbyThresholdInKm)
+        .toList();
   }
 
   static List<Pairing> getSimilarItems() {
@@ -180,7 +210,10 @@ class PairingProvider {
       Pairing(
         item: '2nd Item at \$1',
         postedBy: asport,
-        location: 'Nano Plaza - ASport',
+        location: PostedLocation(
+          desc: 'Nano Plaza - ASport',
+          location: LocationProvider.taipo,
+        ),
         favorite: false,
         postedDate: fiveMinAgo,
         deadline: tenDaysAfter,
@@ -191,7 +224,10 @@ class PairingProvider {
       Pairing(
         item: 'Sharing on BShop Discount',
         postedBy: koey98,
-        location: 'Nano Plaza - ASport',
+        location: PostedLocation(
+          desc: 'Nano Plaza - ASport',
+          location: LocationProvider.taipo,
+        ),
         favorite: false,
         postedDate: twoDaysAgo,
         deadline: fifteenDaysAfter,
