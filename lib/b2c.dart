@@ -1,5 +1,6 @@
 import 'package:crowdbuy/community.dart';
 import 'package:crowdbuy/pairing_provider.dart';
+import 'package:crowdbuy/request.dart';
 import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
 
@@ -309,8 +310,8 @@ class B2C extends StatelessWidget {
     );
   }
 
-  makeNewRequest(BuildContext context) {
-    Pairing newPairing = Pairing(
+  makeNewRequest(BuildContext context) async {
+    /*Pairing newPairing = Pairing(
       item: pairing.item,
       location: pairing.location,
       postedBy: pairing.postedBy,
@@ -320,8 +321,22 @@ class B2C extends StatelessWidget {
       liked: pairing.liked,
       bannerUrl: pairing.bannerUrl,
       requesters: [],
-    );
+    );*/
+
+    var newPairing = await Navigator.of(context).push(
+      makeRequest(pairing),
+    ) as Pairing;
 
     Navigator.pop(context, newPairing);
+  }
+
+  Route makeRequest(Pairing pairing) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          RequestPage(pairing: pairing),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
+    );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:crowdbuy/b2c.dart';
 import 'package:crowdbuy/pairing_provider.dart';
 import 'package:crowdbuy/request.dart';
 import 'package:flutter/material.dart';
@@ -83,16 +84,6 @@ class ChatListState extends State<ChatList> {
       ),
     );
   }
-}
-
-Route _createRoute() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) =>
-        const RequestPage(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return child;
-    },
-  );
 }
 
 class FloatingAppBar extends StatelessWidget with PreferredSizeWidget {
@@ -225,7 +216,7 @@ class PairingItem extends StatelessWidget {
                       ]))
                 ]),
             onTap: () {
-              Navigator.of(context).push(_createRoute());
+              //Navigator.of(context).push(_createRoute());
             }));
   }
 }

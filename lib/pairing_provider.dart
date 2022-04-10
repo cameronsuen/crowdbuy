@@ -124,6 +124,8 @@ class PairingProvider {
   }
 
   submitRequest(Pairing pairing) {
+    pairing.postedBy = jack;
+    pairing.postedDate = DateTime.now();
     pairings.add(pairing);
   }
 
@@ -137,12 +139,12 @@ class PairingProvider {
     avatarUrl: '../asset/propic/koey98.png',
   );
   static var aby = User(
-    username: 'aby.lu',
+    username: 'Nat',
     rating: 4.9,
     avatarUrl: '../asset/propic/aby.lu.png',
   );
   static var jack = User(
-    username: 'jack_smith',
+    username: 'Cameron',
     rating: 4.1,
     avatarUrl: '../asset/propic/jack_smith.png',
   );
