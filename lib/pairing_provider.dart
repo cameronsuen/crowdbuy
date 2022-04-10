@@ -59,7 +59,7 @@ class PairingProvider {
         postedBy: asport,
         location: 'Nano Plaza - ASport',
         favorite: false,
-        postedDate: fiveMinAgo,
+        postedDate: fiveDaysAgo,
         deadline: threeDaysAfter,
         liked: 5,
         bannerUrl: '../asset/discount-tile1.jpg',
@@ -189,7 +189,7 @@ class PairingProvider {
         requesters: [],
       ),
       Pairing(
-        item: 'Sharing on  BShop Discount',
+        item: 'Sharing on BShop Discount',
         postedBy: koey98,
         location: 'Nano Plaza - ASport',
         favorite: false,
@@ -210,49 +210,14 @@ class PairingProvider {
     DateTime fifteenDaysAfter = now.add(const Duration(days: 15));
     DateTime twentyDaysAfter = now.add(const Duration(days: 20));
     DateTime fiveMinAgo = now.subtract(const Duration(minutes: 5));
+    DateTime tenMinAgo = now.subtract(const Duration(minutes: 10));
 
     DateTime twoDaysAgo = now.subtract(const Duration(days: 2));
     DateTime oneDayAgo = now.subtract(const Duration(days: 1));
 
-    /*var pairings = <Pairing>[
-      Pairing(
-        item: '2nd Item at \$1',
-        postedBy: asport,
-        location: 'Nano Plaza - ASport',
-        favorite: false,
-        postedDate: fiveMinAgo,
-        deadline: tenDaysAfter,
-        liked: 10,
-        bannerUrl: '../asset/discount-tile1.jpg',
-        requesters: [],
-      ),
-      Pairing(
-        item: 'Sharing on  BShop Discount',
-        postedBy: koey98,
-        location: 'Nano Plaza - ASport',
-        favorite: false,
-        postedDate: twoDaysAgo,
-        deadline: fifteenDaysAfter,
-        liked: 8,
-        bannerUrl: '../asset/discount-tile3.jpg',
-        requesters: [],
-      ),
-      Pairing(
-        item: '\$400 for 3 pairs of shoes',
-        postedBy: jack,
-        location: 'Nano Plaza - Boutique',
-        favorite: false,
-        postedDate: twoDaysAgo,
-        deadline: fifteenDaysAfter,
-        liked: 3,
-        bannerUrl: '../asset/discount-tile4.jpg',
-        requesters: [],
-      ),
-    ];*/
-
     var categories = <PairingCategory>[
       PairingCategory("Latest",
-          pairings.where((p) => p.postedDate.isAfter(oneDayAgo)).toList()),
+          pairings.where((p) => p.postedDate.isAfter(tenMinAgo)).toList()),
       PairingCategory("Popular", pairings.where((p) => p.liked > 5).toList()),
       PairingCategory("Last Minute Offer",
           pairings.where((p) => p.deadline.isBefore(twentyDaysAfter)).toList()),
