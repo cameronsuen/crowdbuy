@@ -54,6 +54,7 @@ class PairingProvider {
     DateTime threeDaysAfter = now.add(const Duration(days: 3));
     DateTime oneWeekAfter = now.add(const Duration(days: 7));
     DateTime twoWeeksAfter = now.add(const Duration(days: 14));
+    DateTime threeWeeksAfter = now.add(const Duration(days: 21));
     DateTime fiveMinAgo = now.subtract(const Duration(minutes: 5));
     DateTime twelveMinAgo = now.subtract(const Duration(minutes: 12));
 
@@ -71,9 +72,9 @@ class PairingProvider {
         ),
         favorite: false,
         postedDate: fiveDaysAgo,
-        deadline: threeDaysAfter,
+        deadline: twoWeeksAfter,
         liked: 5,
-        bannerUrl: '../asset/discount-tile1.jpg',
+        bannerUrl: '../asset/discount-asport.jpg',
         requesters: [koey98, aby],
       ),
       Pairing(
@@ -81,69 +82,83 @@ class PairingProvider {
         postedBy: koey98,
         location: PostedLocation(
           desc: 'Nano Plaza - ASport',
-          location: LocationProvider.taipo,
-        ),
-        favorite: false,
-        postedDate: fiveMinAgo,
-        deadline: twoWeeksAfter,
-        liked: 8,
-        bannerUrl: '../asset/discount-tile2.jpg',
-        requesters: [],
-      ),
-      Pairing(
-        item: '\$700 for 2 pairs of shoes',
-        postedBy: jack,
-        location: PostedLocation(
-          desc: 'Nano Plaza - Boutique',
-          location: LocationProvider.sf,
+          location: LocationProvider.central,
         ),
         favorite: false,
         postedDate: twelveMinAgo,
         deadline: twoWeeksAfter,
+        liked: 8,
+        bannerUrl: '../asset/discount-asport.jpg',
+        requesters: [],
+      ),
+      Pairing(
+        item: '\$800 for 20% off!',
+        postedBy: jack,
+        location: PostedLocation(
+          desc: 'Far Far Plaza - Boutique',
+          location: LocationProvider.london,
+        ),
+        favorite: false,
+        postedDate: fiveMinAgo,
+        deadline: twoWeeksAfter,
         liked: 10,
-        bannerUrl: '../asset/discount-tile3.jpg',
+        bannerUrl: '../asset/discount-20off.jpg',
         requesters: [],
       ),
       Pairing(
         item: 'Boutique 20% off over \$800',
         postedBy: boutique,
         location: PostedLocation(
-          desc: 'Mega Plaza - Boutique',
+          desc: 'Far Far Plaza - Boutique',
           location: LocationProvider.london,
         ),
         favorite: false,
         postedDate: fiveDaysAgo,
-        deadline: threeDaysAfter,
+        deadline: twoWeeksAfter,
         liked: 10,
-        bannerUrl: '../asset/discount-tile4.jpg',
+        bannerUrl: '../asset/discount-20off.jpg',
         requesters: [],
       ),
       Pairing(
-        item: 'ASport Wait for Pair!!!',
+        item: 'Pet World Opening Promo',
         postedBy: koey98,
         location: PostedLocation(
-          desc: 'Nano Plaza - ASport',
+          desc: 'Far Far Plaza - Pet World',
           location: LocationProvider.canberra,
         ),
         favorite: false,
         postedDate: twoDaysAgo,
-        deadline: oneWeekAfter,
-        liked: 20,
-        bannerUrl: '../asset/discount-tile1.jpg',
+        deadline: threeWeeksAfter,
+        liked: 52,
+        bannerUrl: '../asset/discount-b2g1pet.jpg',
         requesters: [],
       ),
       Pairing(
-        item: '\$700 for 2 pairs of shoes',
+        item: 'Boutique Buy 2 Get 1 Free',
+        postedBy: boutique,
+        location: PostedLocation(
+          desc: 'Far Far Plaza - Boutique',
+          location: LocationProvider.london,
+        ),
+        favorite: false,
+        postedDate: twoDaysAgo,
+        deadline: threeDaysAfter,
+        liked: 32,
+        bannerUrl: '../asset/discount-b2g1.jpg',
+        requesters: [],
+      ),
+      Pairing(
+        item: '\$1 for 2nd pairs of shoes',
         postedBy: jack,
         location: PostedLocation(
-          desc: 'Nano Plaza - Boutique',
+          desc: 'Na Na Plaza - ShoeShine',
           location: LocationProvider.singapore,
         ),
         favorite: false,
         postedDate: threeDaysAgo,
-        deadline: twoWeeksAfter,
-        liked: 3,
-        bannerUrl: '../asset/discount-tile2.jpg',
+        deadline: threeDaysAfter,
+        liked: 33,
+        bannerUrl: '../asset/discount-2nd1.jpg',
         requesters: [],
       ),
     ];
@@ -162,17 +177,17 @@ class PairingProvider {
   static var koey98 = User(
     username: 'Steven',
     rating: 4.5,
-    avatarUrl: '../asset/propic/koey98.png',
+    avatarUrl: '../asset/propic/steven.png',
   );
   static var aby = User(
     username: 'Nat',
     rating: 4.9,
-    avatarUrl: '../asset/propic/aby.lu.png',
+    avatarUrl: '../asset/propic/nat.png',
   );
   static var jack = User(
     username: 'Cameron',
     rating: 4.1,
-    avatarUrl: '../asset/propic/jack_smith.png',
+    avatarUrl: '../asset/propic/cameron.png',
   );
   static var asport = User(
     username: 'ASport Official',
@@ -218,21 +233,21 @@ class PairingProvider {
         postedDate: fiveMinAgo,
         deadline: tenDaysAfter,
         liked: 10,
-        bannerUrl: '../asset/discount-tile1.jpg',
+        bannerUrl: '../asset/discount-2nd1.jpg',
         requesters: [],
       ),
       Pairing(
-        item: 'Sharing on BShop Discount',
+        item: 'Sharing on ShoeShine Discount',
         postedBy: koey98,
         location: PostedLocation(
-          desc: 'Nano Plaza - ASport',
+          desc: 'Na Na Plaza - ShoeShine',
           location: LocationProvider.taipo,
         ),
         favorite: false,
         postedDate: twoDaysAgo,
         deadline: fifteenDaysAfter,
         liked: 8,
-        bannerUrl: '../asset/discount-tile3.jpg',
+        bannerUrl: '../asset/discount-b2g1.jpg',
         requesters: [],
       ),
     ];
@@ -254,9 +269,9 @@ class PairingProvider {
     var categories = <PairingCategory>[
       PairingCategory("Latest",
           pairings.where((p) => p.postedDate.isAfter(tenMinAgo)).toList()),
-      PairingCategory("Popular", pairings.where((p) => p.liked > 5).toList()),
+      PairingCategory("Popular", pairings.where((p) => p.liked > 30).toList()),
       PairingCategory("Last Minute Offer",
-          pairings.where((p) => p.deadline.isBefore(twentyDaysAfter)).toList()),
+          pairings.where((p) => p.deadline.isBefore(tenDaysAfter)).toList()),
     ];
 
     return categories;
