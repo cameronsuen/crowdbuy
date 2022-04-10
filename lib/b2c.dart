@@ -127,191 +127,204 @@ class B2C extends StatelessWidget {
               ],
             )),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              const Image(
-                image: NetworkImage('../asset/discount_photo.jpg'),
-              ),
-              ListTile(
-                title: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                  child: Text(
-                    pairing.item,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Center(
+                child: Column(
                   children: [
-                    Row(
-                      children: [
-                        RichText(
-                          text: TextSpan(
-                            text: 'Post by ',
-                            style: const TextStyle(color: Colors.grey),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: pairing.postedBy.username,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                    const Image(
+                      image: NetworkImage('../asset/discount_photo.jpg'),
+                    ),
+                    ListTile(
+                      title: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                        child: Text(
+                          pairing.item,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              RichText(
+                                text: TextSpan(
+                                  text: 'Post by ',
+                                  style: const TextStyle(color: Colors.grey),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: pairing.postedBy.username,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
+                              ),
+                              const Icon(
+                                Icons.check_circle,
+                                size: 14,
+                                color: Color(0xFF0085FF),
                               ),
                             ],
                           ),
-                        ),
-                        const Icon(
-                          Icons.check_circle,
-                          size: 14,
-                          color: Color(0xFF0085FF),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Text('${pairing.postedBy.rating}',
-                            style: const TextStyle(color: Color(0xFF686868))),
-                        const Icon(Icons.star, color: Colors.amber, size: 14),
-                        const Icon(Icons.star, color: Colors.amber, size: 14),
-                        const Icon(Icons.star, color: Colors.amber, size: 14),
-                        const Icon(Icons.star, color: Colors.amber, size: 14),
-                        const Icon(Icons.star_half,
-                            color: Colors.amber, size: 14),
-                        const Text(
-                          '(29)',
-                          style: TextStyle(color: Color(0xFFB0B0B0)),
-                        )
-                      ],
-                    ),
-                    const Text(
-                      'Clothing',
-                      style: TextStyle(color: Colors.blue),
-                    ),
-                  ],
-                ),
-                trailing: Column(
-                  children: [
-                    Stack(
-                      alignment: Alignment.topRight,
-                      children: [
-                        const Padding(
-                          child: Icon(
-                            Icons.favorite_outline,
-                            color: Color(0xFF9F9F9F),
-                            size: 16,
+                          Row(
+                            children: [
+                              Text('${pairing.postedBy.rating}',
+                                  style: const TextStyle(
+                                      color: Color(0xFF686868))),
+                              const Icon(Icons.star,
+                                  color: Colors.amber, size: 14),
+                              const Icon(Icons.star,
+                                  color: Colors.amber, size: 14),
+                              const Icon(Icons.star,
+                                  color: Colors.amber, size: 14),
+                              const Icon(Icons.star,
+                                  color: Colors.amber, size: 14),
+                              const Icon(Icons.star_half,
+                                  color: Colors.amber, size: 14),
+                              const Text(
+                                '(29)',
+                                style: TextStyle(color: Color(0xFFB0B0B0)),
+                              )
+                            ],
                           ),
-                          padding: EdgeInsets.only(right: 50),
-                        ),
-                        Text(
-                          '${pairing.liked} Likes\n336 people joined',
-                          style: const TextStyle(color: Color(0xFF9F9F9F)),
-                          textAlign: TextAlign.right,
-                        ),
-                      ],
+                          const Text(
+                            'Clothing',
+                            style: TextStyle(color: Colors.blue),
+                          ),
+                        ],
+                      ),
+                      trailing: Column(
+                        children: [
+                          Stack(
+                            alignment: Alignment.topRight,
+                            children: [
+                              const Padding(
+                                child: Icon(
+                                  Icons.favorite_outline,
+                                  color: Color(0xFF9F9F9F),
+                                  size: 16,
+                                ),
+                                padding: EdgeInsets.only(right: 50),
+                              ),
+                              Text(
+                                '${pairing.liked} Likes\n336 people joined',
+                                style:
+                                    const TextStyle(color: Color(0xFF9F9F9F)),
+                                textAlign: TextAlign.right,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: standardPadding,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CircleAvatar(
-                      radius: 12,
-                      backgroundColor: Colors.white,
-                      child: Image(
-                          image: NetworkImage(pairing.postedBy.avatarUrl)),
+                    Padding(
+                      padding: standardPadding,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          CircleAvatar(
+                            radius: 12,
+                            backgroundColor: Colors.white,
+                            child: Image(
+                                image:
+                                    NetworkImage(pairing.postedBy.avatarUrl)),
+                          ),
+                          const Padding(padding: EdgeInsets.only(left: 8)),
+                          Text(displayPostedDateOrDeadline()),
+                        ],
+                      ),
                     ),
-                    const Padding(padding: EdgeInsets.only(left: 8)),
-                    Text(displayPostedDateOrDeadline()),
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Outstanding Requests',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 100,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: ((context, index) => renderInterestedParty(
-                        pairing.requesters[index],
-                      )),
-                  itemCount: pairing.requesters.length,
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(16),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'You may also be interested in...',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 280,
-                child: CommunityList(
-                  posts: PairingProvider.getSimilarItems(),
-                  makeNewRequest: makeNewRequest,
-                ),
-              ),
-              const Divider(
-                height: 20,
-                thickness: 1,
-                indent: 0,
-                endIndent: 0,
-                color: Colors.grey,
-              ),
-              Padding(
-                padding: standardPadding,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              primary: const Color(0xFFFF7276),
-                              textStyle: const TextStyle(fontSize: 20)),
-                          onPressed: () {
-                            makeNewRequest(context, pairing);
-                          },
-                          child: const Text('New Request'),
+                    const Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Outstanding Requests',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.start,
                         ),
                       ),
                     ),
-                    const Icon(Icons.chat_outlined, size: 35),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: ((context, index) => renderInterestedParty(
+                              pairing.requesters[index],
+                            )),
+                        itemCount: pairing.requesters.length,
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'You may also be interested in...',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 280,
+                      child: CommunityList(
+                        posts: PairingProvider.getSimilarItems(),
+                        makeNewRequest: makeNewRequest,
+                      ),
+                    ),
+                    /*const Divider(
+                      height: 20,
+                      thickness: 1,
+                      indent: 0,
+                      endIndent: 0,
+                      color: Colors.grey,
+                    ),*/
                   ],
                 ),
-              )
-            ],
+              ),
+            ),
           ),
-        ),
+          Padding(
+            padding: standardPadding,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: const Color(0xFFFF7276),
+                          textStyle: const TextStyle(fontSize: 20)),
+                      onPressed: () {
+                        makeNewRequest(context, pairing);
+                      },
+                      child: const Text('New Request'),
+                    ),
+                  ),
+                ),
+                const Icon(Icons.chat_outlined, size: 35),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
