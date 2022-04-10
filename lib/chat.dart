@@ -14,6 +14,7 @@ class ChatPage extends StatefulWidget {
 
 class Chat extends State<ChatPage> {
   final TextEditingController textEditingController = TextEditingController();
+  final ChatProvider chatProvider = ChatProvider();
   late final User user;
 
   @override
@@ -129,7 +130,7 @@ class Chat extends State<ChatPage> {
   Widget buildMessages() {
     return Flexible(
         child: StreamBuilder<MessageSnapshot>(
-            stream: ChatProvider.getMessages(),
+            stream: chatProvider.getMessages(),
             builder: (BuildContext context,
                 AsyncSnapshot<MessageSnapshot> snapshot) {
               if (snapshot.hasData) {
@@ -179,7 +180,19 @@ class Chat extends State<ChatPage> {
     );
   }
 
-  void onSendMessage(String text) {}
+  void onSendMessage(String text) {
+    chatProvider.pushMessage(
+      Message(
+        "camsuen",
+        "to",
+        text,
+        false,
+        const Duration(seconds: 0),
+        DateTime.now(),
+      ),
+    );
+    textEditingController.clear();
+  }
 
   void getAttachment() {}
 
