@@ -4,6 +4,8 @@ import 'package:crowdbuy/request.dart';
 import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
 
+import 'chat.dart';
+
 class B2C extends StatelessWidget {
   Pairing pairing;
 
@@ -93,6 +95,9 @@ class B2C extends StatelessWidget {
                     ),
                   ],
                 ),
+                onTap: () {
+                  Navigator.of(context).push(startNewChat(context));
+                },
               ),
             ],
           ),
@@ -307,6 +312,15 @@ class B2C extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  startNewChat(BuildContext context) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => const ChatPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
     );
   }
 
