@@ -96,7 +96,7 @@ class B2C extends StatelessWidget {
                   ],
                 ),
                 onTap: () {
-                  Navigator.of(context).push(startNewChat(context));
+                  Navigator.of(context).push(startNewChat(context, user));
                 },
               ),
             ],
@@ -333,9 +333,11 @@ class B2C extends StatelessWidget {
     );
   }
 
-  startNewChat(BuildContext context) {
+  startNewChat(BuildContext context, User user) {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => const ChatPage(),
+      pageBuilder: (context, animation, secondaryAnimation) => ChatPage(
+        user: user,
+      ),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return child;
       },

@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
           makeNewRequest: makeNewRequest,
         );
       case 2:
-        return const ChatPage();
+        return ChatPage(user: provider.getCurrentUser());
       // return const Calculator();
       case 3:
         return const Account();

@@ -1,9 +1,12 @@
+import 'package:crowdbuy/calculator.dart';
+import 'package:crowdbuy/pairing_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:crowdbuy/chat_provider.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  final User user;
+  const ChatPage({Key? key, required this.user}) : super(key: key);
 
   @override
   Chat createState() => Chat();
@@ -11,43 +14,53 @@ class ChatPage extends StatefulWidget {
 
 class Chat extends State<ChatPage> {
   final TextEditingController textEditingController = TextEditingController();
+  late final User user;
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      user = widget.user;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Column(
-            children: <Widget>[
-              const Text("Koey98"),
-              Text(
-                "Last seen 02:55 pm",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Theme.of(context).secondaryHeaderColor,
+            title: Column(
+              children: <Widget>[
+                Text(user.username),
+                Text(
+                  "Last seen 02:55 pm",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).secondaryHeaderColor,
+                  ),
                 ),
-              ),
-            ],
-            crossAxisAlignment: CrossAxisAlignment.start,
-          ),
-          leadingWidth: 72,
-          leading: FittedBox(
+              ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            leadingWidth: 72,
+            leading: FittedBox(
               fit: BoxFit.cover,
               child: Row(
-                children: const <Widget>[
-                  Icon(Icons.arrow_back),
+                children: <Widget>[
+                  const Icon(Icons.arrow_back),
                   Padding(
-                      padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
                       child: CircleAvatar(
-                        child: Text('TH'),
+                        child: Image.network(user.avatarUrl),
                       )),
                 ],
-              )),
-        ),
+              ),
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: const Icon(Icons.calculate_outlined),
+                onPressed: launchCalculator,
+              )
+            ]),
         body: Stack(children: <Widget>[
           Column(
             children: <Widget>[
@@ -169,4 +182,16 @@ class Chat extends State<ChatPage> {
   void onSendMessage(String text) {}
 
   void getAttachment() {}
+
+  void launchCalculator() {
+    var router = PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const Calculator(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
+    );
+
+    Navigator.of(context).push(router);
+  }
 }
