@@ -2,17 +2,17 @@ import 'package:crowdbuy/pairing_provider.dart';
 import 'package:flutter/material.dart';
 
 class RequestPage extends StatefulWidget {
-  final Pairing? pairing;
-  const RequestPage({Key? key, this.pairing}) : super(key: key);
+  final Pairing pairing;
+  const RequestPage({Key? key, required this.pairing}) : super(key: key);
 
   @override
   Request createState() => Request();
 }
 
 class Request extends State<RequestPage> {
-  final Pairing? pairing;
+  late final Pairing pairing;
 
-  Request({this.pairing});
+  Request();
 
   TextEditingController subjectEditingController =
       TextEditingController(text: '');
@@ -21,7 +21,8 @@ class Request extends State<RequestPage> {
   void initState() {
     super.initState();
     setState(() {
-      subjectEditingController.text = widget.pairing?.item ?? '';
+      subjectEditingController.text = widget.pairing.item;
+      pairing = widget.pairing;
     });
   }
 
@@ -136,7 +137,21 @@ class Request extends State<RequestPage> {
 
   void getAttachment() {}
 
-  void onPressed() {}
+  void onPressed() {
+    Pairing newPairing = Pairing(
+      item: pairing.item,
+      location: pairing.location,
+      postedBy: pairing.postedBy,
+      favorite: pairing.favorite,
+      postedDate: pairing.postedDate,
+      deadline: pairing.deadline,
+      liked: pairing.liked,
+      bannerUrl: pairing.bannerUrl,
+      requesters: [],
+    );
+
+    Navigator.pop(context, newPairing);
+  }
 
   void onAddPhoto() {}
 }

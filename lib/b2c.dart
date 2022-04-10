@@ -1,7 +1,10 @@
 import 'package:crowdbuy/community.dart';
 import 'package:crowdbuy/pairing_provider.dart';
+import 'package:crowdbuy/request.dart';
 import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
+
+import 'chat.dart';
 
 class B2C extends StatelessWidget {
   Pairing pairing;
@@ -92,6 +95,9 @@ class B2C extends StatelessWidget {
                     ),
                   ],
                 ),
+                onTap: () {
+                  Navigator.of(context).push(startNewChat(context));
+                },
               ),
             ],
           ),
@@ -270,6 +276,7 @@ class B2C extends StatelessWidget {
                 height: 280,
                 child: CommunityList(
                   posts: PairingProvider.getSimilarItems(),
+                  makeNewRequest: makeNewRequest,
                 ),
               ),
               const Divider(
@@ -291,7 +298,9 @@ class B2C extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                               primary: const Color(0xFFFF7276),
                               textStyle: const TextStyle(fontSize: 20)),
-                          onPressed: () {},
+                          onPressed: () {
+                            makeNewRequest(context, pairing);
+                          },
                           child: const Text('New Request'),
                         ),
                       ),
@@ -304,6 +313,33 @@ class B2C extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  startNewChat(BuildContext context) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => const ChatPage(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
+    );
+  }
+
+  makeNewRequest(BuildContext context, Pairing pairing) async {
+    var newPairing = await Navigator.of(context).push(
+      makeRequest(pairing),
+    ) as Pairing;
+
+    Navigator.pop(context, newPairing);
+  }
+
+  Route makeRequest(Pairing pairing) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          RequestPage(pairing: pairing),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
     );
   }
 }

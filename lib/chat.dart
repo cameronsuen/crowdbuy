@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'chat_provider.dart';
+import 'package:crowdbuy/chat_provider.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
