@@ -1,4 +1,5 @@
 import 'package:crowdbuy/location_provider.dart';
+import 'package:crowdbuy/user.dart';
 import 'package:location/location.dart';
 import 'package:uuid/uuid.dart';
 
@@ -6,14 +7,6 @@ class PairingCategory {
   final String category;
   final List<Pairing> pairings;
   PairingCategory(this.category, this.pairings);
-}
-
-class User {
-  String username;
-  double rating;
-  String avatarUrl;
-
-  User({required this.username, required this.rating, required this.avatarUrl});
 }
 
 class PostedLocation {
@@ -64,7 +57,7 @@ class PairingProvider {
     pairings = <Pairing>[
       Pairing(
         item: 'ASport 40% off over \$500',
-        postedBy: asport,
+        postedBy: User.asport,
         location: PostedLocation(
           desc: 'Nano Plaza - ASport',
           location: LocationProvider.central,
@@ -74,11 +67,11 @@ class PairingProvider {
         deadline: threeDaysAfter,
         liked: 5,
         bannerUrl: '../asset/discount-tile1.jpg',
-        requesters: [koey98, aby],
+        requesters: [User.koey98, User.aby],
       ),
       Pairing(
         item: 'ASport Wait for Pair!!!',
-        postedBy: koey98,
+        postedBy: User.koey98,
         location: PostedLocation(
           desc: 'Nano Plaza - ASport',
           location: LocationProvider.taipo,
@@ -92,7 +85,7 @@ class PairingProvider {
       ),
       Pairing(
         item: '\$700 for 2 pairs of shoes',
-        postedBy: jack,
+        postedBy: User.jack,
         location: PostedLocation(
           desc: 'Nano Plaza - Boutique',
           location: LocationProvider.sf,
@@ -106,7 +99,7 @@ class PairingProvider {
       ),
       Pairing(
         item: 'Boutique 20% off over \$800',
-        postedBy: boutique,
+        postedBy: User.boutique,
         location: PostedLocation(
           desc: 'Mega Plaza - Boutique',
           location: LocationProvider.london,
@@ -120,7 +113,7 @@ class PairingProvider {
       ),
       Pairing(
         item: 'ASport Wait for Pair!!!',
-        postedBy: koey98,
+        postedBy: User.koey98,
         location: PostedLocation(
           desc: 'Nano Plaza - ASport',
           location: LocationProvider.canberra,
@@ -134,7 +127,7 @@ class PairingProvider {
       ),
       Pairing(
         item: '\$700 for 2 pairs of shoes',
-        postedBy: jack,
+        postedBy: User.jack,
         location: PostedLocation(
           desc: 'Nano Plaza - Boutique',
           location: LocationProvider.singapore,
@@ -150,45 +143,14 @@ class PairingProvider {
   }
 
   submitRequest(Pairing pairing) {
-    pairing.postedBy = jack;
+    pairing.postedBy = User.jack;
     pairing.postedDate = DateTime.now();
     pairings.add(pairing);
   }
 
   User getCurrentUser() {
-    return currentUser;
+    return User.currentUser;
   }
-
-  static var koey98 = User(
-    username: 'Steven',
-    rating: 4.5,
-    avatarUrl: '../asset/propic/koey98.png',
-  );
-  static var aby = User(
-    username: 'Nat',
-    rating: 4.9,
-    avatarUrl: '../asset/propic/aby.lu.png',
-  );
-  static var jack = User(
-    username: 'Cameron',
-    rating: 4.1,
-    avatarUrl: '../asset/propic/jack_smith.png',
-  );
-  static var asport = User(
-    username: 'ASport Official',
-    rating: 4.1,
-    avatarUrl: '../asset/propic/asport.png',
-  );
-  static var boutique = User(
-    username: 'Boutique Official',
-    rating: 4.5,
-    avatarUrl: '../asset/propic/boutique.png',
-  );
-  static var currentUser = User(
-    username: 'Evans',
-    rating: 4.9,
-    avatarUrl: '../asset/propic/me.png',
-  );
 
   List<Pairing> getNearby(LocationData currentLocation) {
     return pairings
@@ -209,7 +171,7 @@ class PairingProvider {
     var pairings = <Pairing>[
       Pairing(
         item: '2nd Item at \$1',
-        postedBy: asport,
+        postedBy: User.asport,
         location: PostedLocation(
           desc: 'Nano Plaza - ASport',
           location: LocationProvider.taipo,
@@ -223,7 +185,7 @@ class PairingProvider {
       ),
       Pairing(
         item: 'Sharing on BShop Discount',
-        postedBy: koey98,
+        postedBy: User.koey98,
         location: PostedLocation(
           desc: 'Nano Plaza - ASport',
           location: LocationProvider.taipo,

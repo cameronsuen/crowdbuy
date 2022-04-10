@@ -1,6 +1,7 @@
 import 'package:crowdbuy/community.dart';
 import 'package:crowdbuy/pairing_provider.dart';
 import 'package:crowdbuy/request.dart';
+import 'package:crowdbuy/user.dart';
 import 'package:duration/duration.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,6 @@
 import 'package:crowdbuy/calculator.dart';
 import 'package:crowdbuy/pairing_provider.dart';
+import 'package:crowdbuy/user.dart';
 import 'package:flutter/material.dart';
 
 import 'package:crowdbuy/chat_provider.dart';
@@ -14,7 +15,7 @@ class ChatPage extends StatefulWidget {
 
 class Chat extends State<ChatPage> {
   final TextEditingController textEditingController = TextEditingController();
-  final ChatProvider chatProvider = ChatProvider();
+  final IChatProvider chatProvider = RealChatProvider();
   late final User user;
 
   @override

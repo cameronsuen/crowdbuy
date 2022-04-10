@@ -1,7 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crowdbuy/auth_provider.dart';
+import 'package:crowdbuy/firebase_options.dart';
 import 'package:crowdbuy/location_provider.dart';
 import 'package:crowdbuy/pairing_provider.dart';
-import 'package:crowdbuy/request.dart';
+import 'package:crowdbuy/user.dart' as user_info;
+import 'package:crowdbuy/signin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:duration/duration.dart';
 import 'package:location/location.dart';
 
@@ -12,7 +18,34 @@ import 'chat_list.dart';
 import 'community.dart';
 import 'calculator.dart';
 
-void main() {
+void _populateData() async {
+  var snapshot = await FirebaseFirestore.instance.collection('userInfo').get();
+
+  for (var doc in snapshot.docs) {
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      transaction.delete(doc.reference);
+    });
+  }
+
+  for (var user in user_info.User.getAllUsers()) {
+    var email =
+        '${user.username.toLowerCase().replaceAll(RegExp(' '), '_')}@crowdbuy-dummy.com';
+    var doc = FirebaseFirestore.instance.collection('userInfo').doc(email);
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      transaction.set(doc, {
+        'username': user.username,
+        'avatarUrl': user.avatarUrl,
+        'rating': user.rating,
+      });
+    });
+  }
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -66,6 +99,10 @@ class _MyHomePageState extends State<MyHomePage> {
   PairingProvider provider = PairingProvider();
   LocationProvider locationProvider = LocationProvider();
   LocationData currentLocation = LocationProvider.central;
+  IAuthProvider authProvider = RealAuthProvider(
+    firebaseAuth: FirebaseAuth.instance,
+    firebaseFirestore: FirebaseFirestore.instance,
+  );
 
   @override
   void initState() {
@@ -103,6 +140,11 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void signin(String username, String password) async {
+    await authProvider.signin(username, password);
+    setState(() {});
+  }
+
   FloatingActionButton? getActionButtonIfNeeded() {
     switch (index) {
       case 1:
@@ -138,6 +180,11 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
+    if (authProvider.getCurrentUser() == null) {
+      return SignInPage(signin: signin);
+    }
+
     return Scaffold(
       appBar: const FloatingAppBar(),
       body: Center(

@@ -1,3 +1,7 @@
+import 'dart:html';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Message {
   String from;
   String to;
@@ -17,7 +21,70 @@ class MessageSnapshot {
   MessageSnapshot(this.chatId, this.timestamp, [this.messages = const []]);
 }
 
-class ChatProvider {
+abstract class IChatProvider {
+  Stream<MessageSnapshot> getMessages();
+  void pushMessage(Message message);
+}
+
+class RealChatProvider implements IChatProvider {
+  String chatId;
+
+  RealChatProvider() : chatId = '12345';
+
+  @override
+  Stream<MessageSnapshot> getMessages() {
+    return FirebaseFirestore.instance
+        .collection('chats')
+        .doc(chatId)
+        .collection(chatId)
+        .orderBy('timestamp', descending: true)
+        .limit(100)
+        .snapshots()
+        .asyncMap(
+          (snapshot) => MessageSnapshot(
+            chatId,
+            DateTime.now(),
+            snapshot.docs
+                .map(
+                  (m) => Message(
+                    m.get('from') as String,
+                    m.get('to') as String,
+                    m.get('message') as String,
+                    false,
+                    const Duration(seconds: 0),
+                    DateTime.fromMillisecondsSinceEpoch(
+                      int.parse(m.get('timestamp').toString()),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        );
+  }
+
+  @override
+  void pushMessage(Message message) {
+    var documentReference = FirebaseFirestore.instance
+        .collection('chats')
+        .doc(chatId)
+        .collection(chatId)
+        .doc(DateTime.now().millisecondsSinceEpoch.toString());
+
+    FirebaseFirestore.instance.runTransaction((transaction) async {
+      transaction.set(
+        documentReference,
+        {
+          'from': message.from,
+          'to': message.to,
+          'timestamp': message.timestamp.millisecondsSinceEpoch.toString(),
+          'message': message.message,
+        },
+      );
+    });
+  }
+}
+
+class ChatProvider implements IChatProvider {
   final String chatId;
   late List<Message> messages;
   ChatProvider() : chatId = "12345678" {
@@ -46,15 +113,8 @@ class ChatProvider {
     ];
   }
 
+  @override
   Stream<MessageSnapshot> getMessages() async* {
-    /*int i = 0;
-    while (i < messages.length) {
-      ++i;
-      if (messages.last.isMock) {
-        await Future.delayed(messages.last.delay);
-      }
-      yield MessageSnapshot(chatId, DateTime.now(), messages.sublist(0, i + 1));
-    }*/
     await Future.delayed(const Duration(seconds: 1));
     yield MessageSnapshot(chatId, DateTime.now(), messages.sublist(0, 1));
     await Future.delayed(const Duration(seconds: 3));
@@ -68,6 +128,7 @@ class ChatProvider {
     }
   }
 
+  @override
   void pushMessage(Message message) {
     messages.add(message);
   }
