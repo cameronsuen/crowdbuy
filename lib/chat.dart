@@ -58,7 +58,11 @@ class Chat extends State<ChatPage> {
             ),
             actions: <Widget>[
               IconButton(
-                icon: const Icon(Icons.calculate_outlined),
+                padding: const EdgeInsets.only(right: 28),
+                icon: const Icon(
+                  Icons.calculate_outlined,
+                  size: 40,
+                ),
                 onPressed: launchCalculator,
               )
             ]),

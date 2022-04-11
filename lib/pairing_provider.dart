@@ -89,7 +89,7 @@ class PairingProvider {
         deadline: twoWeeksAfter,
         liked: 8,
         bannerUrl: '../asset/discount-asport.jpg',
-        requesters: [],
+        requesters: [asport],
       ),
       Pairing(
         item: '\$800 for 20% off!',
@@ -103,7 +103,7 @@ class PairingProvider {
         deadline: twoWeeksAfter,
         liked: 10,
         bannerUrl: '../asset/discount-20off.jpg',
-        requesters: [],
+        requesters: [boutique],
       ),
       Pairing(
         item: 'Boutique 20% off over \$800',
@@ -190,12 +190,12 @@ class PairingProvider {
     avatarUrl: '../asset/propic/cameron.png',
   );
   static var asport = User(
-    username: 'ASport Official',
+    username: 'ASport',
     rating: 4.1,
     avatarUrl: '../asset/propic/asport.png',
   );
   static var boutique = User(
-    username: 'Boutique Official',
+    username: 'Boutique',
     rating: 4.5,
     avatarUrl: '../asset/propic/boutique.png',
   );
