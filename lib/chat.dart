@@ -43,17 +43,22 @@ class Chat extends State<ChatPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
             ),
             leadingWidth: 72,
-            leading: FittedBox(
-              fit: BoxFit.cover,
-              child: Row(
-                children: <Widget>[
-                  const Icon(Icons.arrow_back),
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
-                      child: CircleAvatar(
-                        child: Image.network(user.avatarUrl),
-                      )),
-                ],
+            leading: InkWell(
+              onTap: () {
+                goBack(context);
+              },
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: Row(
+                  children: <Widget>[
+                    const Icon(Icons.arrow_back),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                        child: CircleAvatar(
+                          child: Image.network(user.avatarUrl),
+                        )),
+                  ],
+                ),
               ),
             ),
             actions: <Widget>[
@@ -210,5 +215,9 @@ class Chat extends State<ChatPage> {
     );
 
     Navigator.of(context).push(router);
+  }
+
+  void goBack(BuildContext context) {
+    Navigator.of(context).pop();
   }
 }

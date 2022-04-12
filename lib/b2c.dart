@@ -123,23 +123,28 @@ class B2C extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
         ),
         leadingWidth: 72,
-        leading: FittedBox(
-            fit: BoxFit.cover,
-            child: Row(
-              children: <Widget>[
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Icon(Icons.arrow_back),
-                ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Image(
-                          image: NetworkImage(pairing.postedBy.avatarUrl)),
-                    )),
-              ],
-            )),
+        leading: InkWell(
+          onTap: () {
+            goBack(context);
+          },
+          child: FittedBox(
+              fit: BoxFit.cover,
+              child: Row(
+                children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: Icon(Icons.arrow_back),
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: Image(
+                            image: NetworkImage(pairing.postedBy.avatarUrl)),
+                      )),
+                ],
+              )),
+        ),
       ),
       body: Column(
         children: [
@@ -388,5 +393,9 @@ class B2C extends StatelessWidget {
         return child;
       },
     );
+  }
+
+  void goBack(BuildContext context) {
+    Navigator.of(context).pop();
   }
 }
