@@ -63,9 +63,20 @@ class B2C extends StatelessWidget {
                 ),
                 title: Padding(
                   padding: const EdgeInsets.only(top: 16),
-                  child: Text(
-                    user.username,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  child: Row(
+                    children: [
+                      Text(
+                        user.username + " ",
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      user.isOffical
+                          ? const Icon(
+                              Icons.check_circle,
+                              size: 14,
+                              color: Color(0xFF0085FF),
+                            )
+                          : const Text(""),
+                    ],
                   ),
                 ),
                 subtitle: Column(
@@ -167,11 +178,13 @@ class B2C extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              const Icon(
-                                Icons.check_circle,
-                                size: 14,
-                                color: Color(0xFF0085FF),
-                              ),
+                              pairing.postedBy.isOffical
+                                  ? const Icon(
+                                      Icons.check_circle,
+                                      size: 14,
+                                      color: Color(0xFF0085FF),
+                                    )
+                                  : const Text(''),
                             ],
                           ),
                           Row(
@@ -245,19 +258,29 @@ class B2C extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.all(16),
+                    Padding(
+                      padding: const EdgeInsets.all(16),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Outstanding Requests',
-                          style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                          textAlign: TextAlign.start,
-                        ),
+                        child: pairing.postedBy.isOffical
+                            ? const Text(
+                                'Outstanding Requests',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                                textAlign: TextAlign.start,
+                              )
+                            : const Text(
+                                'Discount refers to...',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                                textAlign: TextAlign.start,
+                              ),
                       ),
                     ),
                     SizedBox(
@@ -292,13 +315,6 @@ class B2C extends StatelessWidget {
                         makeNewRequest: makeNewRequest,
                       ),
                     ),
-                    /*const Divider(
-                      height: 20,
-                      thickness: 1,
-                      indent: 0,
-                      endIndent: 0,
-                      color: Colors.grey,
-                    ),*/
                   ],
                 ),
               ),
@@ -315,12 +331,21 @@ class B2C extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          primary: const Color(0xFFFF7276),
+                          primary: pairing.postedBy.isOffical
+                              ? const Color(0xFFFF7276)
+                              : const Color(0xFFFF7A00),
                           textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () {
-                        makeNewRequest(context, pairing);
+                        if (pairing.postedBy.isOffical) {
+                          makeNewRequest(context, pairing);
+                        } else {
+                          Navigator.of(context)
+                              .push(startNewChat(context, pairing.postedBy));
+                        }
                       },
-                      child: const Text('New Request'),
+                      child: pairing.postedBy.isOffical
+                          ? const Text('New Request')
+                          : const Text('Join Request'),
                     ),
                   ),
                 ),

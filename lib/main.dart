@@ -306,15 +306,21 @@ class PairingItem extends StatelessWidget {
                       text: TextSpan(
                           text: pairing.location.desc,
                           style: const TextStyle(color: Colors.black))),
-                  RichText(
-                      text: TextSpan(
-                          text: 'Post by ',
-                          style: DefaultTextStyle.of(context).style,
-                          children: <TextSpan>[
-                        TextSpan(
-                            text: pairing.postedBy.username,
-                            style: const TextStyle(fontWeight: FontWeight.bold))
-                      ]))
+                  Row(
+                    children: [
+                      Text('Post by ',
+                          style: DefaultTextStyle.of(context).style),
+                      Text(pairing.postedBy.username + " ",
+                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                      pairing.postedBy.isOffical
+                          ? const Icon(
+                              Icons.check_circle,
+                              size: 14,
+                              color: Color(0xFF0085FF),
+                            )
+                          : const Text(""),
+                    ],
+                  )
                 ]),
             onTap: () {
               makeNewRequest(context, pairing);

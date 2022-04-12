@@ -5,10 +5,10 @@ class Account extends StatelessWidget {
   const Account({Key? key}) : super(key: key);
 
   static var currentUser = User(
-    username: 'Evans',
-    rating: 4.9,
-    avatarUrl: '../asset/propic/me.png',
-  );
+      username: 'Evans',
+      rating: 4.9,
+      avatarUrl: '../asset/propic/me.png',
+      isOffical: false);
 
   @override
   Widget build(BuildContext context) {

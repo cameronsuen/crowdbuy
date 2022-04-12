@@ -122,11 +122,19 @@ class CommunityItem extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 4),
                     child: CircleAvatar(
                       radius: 8,
+                      backgroundColor: Colors.white,
                       child: Image(
                           image: NetworkImage(pairing.postedBy.avatarUrl)),
                     ),
                   ),
-                  Text(pairing.postedBy.username),
+                  Text(pairing.postedBy.username + " "),
+                  pairing.postedBy.isOffical
+                      ? const Icon(
+                          Icons.check_circle,
+                          size: 14,
+                          color: Color(0xFF0085FF),
+                        )
+                      : const Text(""),
                 ],
               ),
               onTap: () {

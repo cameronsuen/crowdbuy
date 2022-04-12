@@ -12,8 +12,13 @@ class User {
   String username;
   double rating;
   String avatarUrl;
+  bool isOffical;
 
-  User({required this.username, required this.rating, required this.avatarUrl});
+  User(
+      {required this.username,
+      required this.rating,
+      required this.avatarUrl,
+      required this.isOffical});
 }
 
 class PostedLocation {
@@ -189,35 +194,35 @@ class PairingProvider {
   }
 
   static var koey98 = User(
-    username: 'Steven',
-    rating: 4.5,
-    avatarUrl: '../asset/propic/steven.png',
-  );
+      username: 'Steven',
+      rating: 4.5,
+      avatarUrl: '../asset/propic/steven.png',
+      isOffical: false);
   static var aby = User(
-    username: 'Nat',
-    rating: 4.9,
-    avatarUrl: '../asset/propic/nat.png',
-  );
+      username: 'Nat',
+      rating: 4.9,
+      avatarUrl: '../asset/propic/nat.png',
+      isOffical: false);
   static var jack = User(
-    username: 'Cameron',
-    rating: 4.1,
-    avatarUrl: '../asset/propic/cameron.png',
-  );
+      username: 'Cameron',
+      rating: 4.1,
+      avatarUrl: '../asset/propic/cameron.png',
+      isOffical: false);
   static var asport = User(
-    username: 'ASport',
-    rating: 4.1,
-    avatarUrl: '../asset/propic/asport.png',
-  );
+      username: 'ASport',
+      rating: 4.1,
+      avatarUrl: '../asset/propic/asport.png',
+      isOffical: true);
   static var boutique = User(
-    username: 'Boutique',
-    rating: 4.5,
-    avatarUrl: '../asset/propic/boutique.png',
-  );
+      username: 'Boutique',
+      rating: 4.5,
+      avatarUrl: '../asset/propic/boutique.png',
+      isOffical: true);
   static var currentUser = User(
-    username: 'Evans',
-    rating: 4.9,
-    avatarUrl: '../asset/propic/me.png',
-  );
+      username: 'Evans',
+      rating: 4.9,
+      avatarUrl: '../asset/propic/me.png',
+      isOffical: false);
 
   List<Pairing> getNearby(LocationData currentLocation) {
     return pairings
