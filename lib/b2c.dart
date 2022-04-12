@@ -320,7 +320,7 @@ class B2C extends StatelessWidget {
                       height: 280,
                       child: CommunityList(
                         posts: PairingProvider.getSimilarItems(),
-                        makeNewRequest: makeNewRequest,
+                        makeNewRequest: searchAnotherItem,
                       ),
                     ),
                   ],
@@ -371,6 +371,24 @@ class B2C extends StatelessWidget {
       pageBuilder: (context, animation, secondaryAnimation) => ChatPage(
         user: user,
       ),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return child;
+      },
+    );
+  }
+
+  searchAnotherItem(BuildContext context, Pairing pairing) async {
+    var newPairing = await Navigator.of(context).push(
+      gotoAnotherItem(pairing),
+    ) as Pairing;
+
+    Navigator.pop(context, newPairing);
+  }
+
+  Route gotoAnotherItem(Pairing pairing) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          B2C(pairing: pairing),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return child;
       },

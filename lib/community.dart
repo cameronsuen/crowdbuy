@@ -2,8 +2,6 @@ import 'package:crowdbuy/pairing_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:duration/duration.dart';
 
-import 'b2c.dart';
-
 class CommunityPage extends StatelessWidget {
   final List<PairingCategory> categories;
   final void Function(BuildContext context, Pairing pairing) makeNewRequest;
