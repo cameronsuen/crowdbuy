@@ -302,7 +302,10 @@ class PairingItem extends StatelessWidget {
             subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  RichText(text: TextSpan(text: pairing.location.desc)),
+                  RichText(
+                      text: TextSpan(
+                          text: pairing.location.desc,
+                          style: const TextStyle(color: Colors.black))),
                   RichText(
                       text: TextSpan(
                           text: 'Post by ',

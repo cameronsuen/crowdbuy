@@ -64,7 +64,7 @@ class PairingProvider {
 
     pairings = <Pairing>[
       Pairing(
-        item: 'ASport 40% off over \$500',
+        item: 'ASport Buy 2 for 20% off',
         postedBy: asport,
         location: PostedLocation(
           desc: 'Nano Plaza - ASport',
@@ -82,7 +82,7 @@ class PairingProvider {
         postedBy: koey98,
         location: PostedLocation(
           desc: 'Nano Plaza - ASport',
-          location: LocationProvider.central,
+          location: LocationProvider.singapore,
         ),
         favorite: false,
         postedDate: twelveMinAgo,
@@ -92,8 +92,22 @@ class PairingProvider {
         requesters: [asport],
       ),
       Pairing(
+        item: 'CcGlasses buy 2 get 1 free!!!',
+        postedBy: koey98,
+        location: PostedLocation(
+          desc: 'Nano Plaza - CcGlasses',
+          location: LocationProvider.central,
+        ),
+        favorite: false,
+        postedDate: fiveDaysAgo,
+        deadline: twoWeeksAfter,
+        liked: 8,
+        bannerUrl: '../asset/discount-b2g1.jpg',
+        requesters: [asport],
+      ),
+      Pairing(
         item: '\$800 for 20% off!',
-        postedBy: jack,
+        postedBy: aby,
         location: PostedLocation(
           desc: 'Far Far Plaza - Boutique',
           location: LocationProvider.london,

@@ -85,33 +85,34 @@ class Request extends State<RequestPage> {
             Card(
               child: ListTile(
                 leading: Column(
-                  children: const <Widget>[
+                  children: <Widget>[
                     (CircleAvatar(
-                      backgroundColor: Colors.deepOrangeAccent,
-                      child: Text("TH"),
+                      backgroundColor: Colors.white,
+                      child: Image(
+                          image: NetworkImage(pairing.postedBy.avatarUrl)),
                     )),
                   ],
                   mainAxisAlignment: MainAxisAlignment.center,
                 ),
-                title: const Text("ASport 40% off over \$500"),
+                title: Text(pairing.item),
                 isThreeLine: true,
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     RichText(
-                      text: const TextSpan(
-                        text: 'Nano Plaza (ASport) 150m',
+                      text: TextSpan(
+                        text: pairing.location.desc,
                         //style: DefaultTextStyle.of(context).style,
                       ),
                     ),
                     RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                         text: "Post by ",
                         //style: DefaultTextStyle.of(context).style,
                         children: <TextSpan>[
                           TextSpan(
-                            text: "ASport Official",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            text: pairing.postedBy.username,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -139,7 +140,7 @@ class Request extends State<RequestPage> {
 
   void onPressed() {
     Pairing newPairing = Pairing(
-      item: pairing.item,
+      item: subjectEditingController.text,
       location: pairing.location,
       postedBy: pairing.postedBy,
       favorite: pairing.favorite,

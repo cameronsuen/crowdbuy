@@ -134,8 +134,8 @@ class B2C extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: [
-                    const Image(
-                      image: NetworkImage('../asset/discount_photo.jpg'),
+                    Image(
+                      image: NetworkImage(pairing.bannerUrl),
                     ),
                     ListTile(
                       title: Padding(
@@ -261,7 +261,7 @@ class B2C extends StatelessWidget {
                       ),
                     ),
                     SizedBox(
-                      height: 100,
+                      height: pairing.requesters.isEmpty ? 10 : 100,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: ((context, index) => renderInterestedParty(
