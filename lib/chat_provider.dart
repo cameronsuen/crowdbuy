@@ -23,25 +23,32 @@ class ChatProvider {
   ChatProvider() : chatId = "12345678" {
     messages = [
       Message(
-        "sto",
         "camsuen",
-        "Hello, I'll buy a \$300 shirt",
+        "sto",
+        "Hello, I want to join your discount",
         true,
         const Duration(seconds: 1),
       ),
       Message(
+        "sto",
+        "camsuen",
+        "Sure, and we split the bill to share the 20% off evenly?",
+        true,
+        const Duration(seconds: 2),
+      ),
+      Message(
         "camsuen",
         "sto",
-        "Sure, let's wait at ASport at 2/F?",
+        "No problem, see you at ASport at 2/F",
         true,
-        const Duration(seconds: 3),
+        const Duration(seconds: 2),
       ),
       Message(
         "sto",
         "camsuen",
-        "Sure, see you!",
+        "ok",
         true,
-        const Duration(seconds: 2),
+        const Duration(seconds: 1),
       ),
     ];
   }
