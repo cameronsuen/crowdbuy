@@ -102,17 +102,21 @@ class Request extends State<RequestPage> {
                     RichText(
                       text: TextSpan(
                         text: pairing.location.desc,
+                        style: const TextStyle(color: Colors.black),
                         //style: DefaultTextStyle.of(context).style,
                       ),
                     ),
                     RichText(
                       text: TextSpan(
                         text: "Post by ",
+                        style: const TextStyle(color: Colors.black),
                         //style: DefaultTextStyle.of(context).style,
                         children: <TextSpan>[
                           TextSpan(
                             text: pairing.postedBy.username,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),

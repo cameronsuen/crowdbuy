@@ -127,9 +127,12 @@ class B2C extends StatelessWidget {
             fit: BoxFit.cover,
             child: Row(
               children: <Widget>[
-                const Icon(Icons.arrow_back),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: Icon(Icons.arrow_back),
+                ),
                 Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
                       child: Image(
