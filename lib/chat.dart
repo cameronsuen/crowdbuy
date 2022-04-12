@@ -218,6 +218,6 @@ class Chat extends State<ChatPage> {
   }
 
   void goBack(BuildContext context) {
-    Navigator.of(context).pop();
+    Navigator.of(context).maybePop();
   }
 }

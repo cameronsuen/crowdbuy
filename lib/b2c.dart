@@ -396,6 +396,6 @@ class B2C extends StatelessWidget {
   }
 
   void goBack(BuildContext context) {
-    Navigator.of(context).pop();
+    Navigator.of(context).maybePop();
   }
 }
