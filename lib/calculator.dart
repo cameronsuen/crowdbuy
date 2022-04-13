@@ -91,7 +91,7 @@ class Calculator extends StatelessWidget {
                   ),
                   Flexible(
                     child: TextField(
-                      controller: TextEditingController(text: '70'),
+                      controller: TextEditingController(text: '20'),
                       decoration: const InputDecoration(
                         suffixText: '%',
                         isDense: true,
@@ -137,23 +137,24 @@ class Calculator extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 8, 0, 20),
                       child: ListTile(
+                        isThreeLine: true,
                         subtitle: const Text(
                             'Amount Purchased\nDiscount Price\nAmount Saved'),
                         trailing: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: const [
                             Text(
-                              '\$100.00',
+                              '\$300.00',
                               style: TextStyle(
                                   decoration: TextDecoration.underline),
                               textAlign: TextAlign.end,
                             ),
                             Text(
-                              '\$70.00',
+                              '\$240.00',
                               textAlign: TextAlign.end,
                             ),
                             Text(
-                              '-\$30.00',
+                              '-\$60.00',
                               style: TextStyle(color: Colors.green),
                               textAlign: TextAlign.end,
                             ),
@@ -196,7 +197,7 @@ class Calculator extends StatelessWidget {
                             style: TextStyle(color: Color(0xFF7b7b7b)),
                           ),
                           Text(
-                            '\$96.00',
+                            '\$464.80',
                             textAlign: TextAlign.end,
                           )
                         ],
@@ -206,11 +207,11 @@ class Calculator extends StatelessWidget {
                       child: Row(
                         children: const [
                           Icon(
-                            Icons.arrow_right,
+                            Icons.add,
                             color: Colors.black,
                           ),
                           Text(
-                            'Person 3',
+                            'Add Person',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -234,12 +235,12 @@ class Calculator extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: const [
                             Text(
-                              'Discount Price',
+                              '',
                               textAlign: TextAlign.start,
                               style: TextStyle(color: Color(0xFF7b7b7b)),
                             ),
                             Text(
-                              '\$464.80',
+                              '',
                               textAlign: TextAlign.end,
                             )
                           ],
@@ -258,7 +259,7 @@ class Calculator extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '\$640.80',
+                            '\$704.80',
                             style: TextStyle(
                               color: Colors.black,
                             ),
@@ -284,7 +285,7 @@ class Calculator extends StatelessWidget {
                             style: TextStyle(color: Color(0xFF7b7b7b)),
                           ),
                           Text(
-                            '-\$160.20',
+                            '-\$176.20',
                             textAlign: TextAlign.end,
                             style: TextStyle(color: Colors.green),
                           )
